@@ -10,31 +10,15 @@
 
 <body>
     <?php include("../navbar.php");
-    $req = $bdd->prepare("SELECT user.id, user.nom, user.prenom, ville.cp, ville.vil_nom, mission.id, mission.debut, mission.fin, mission.validée, mission.payée 
+    $req = $bdd->prepare("SELECT user.nom, user.prenom, ville.cp, ville.vil_nom, mission.id, mission.debut, mission.fin, mission.validée, mission.payée 
     FROM mission, user, ville 
     WHERE mission.idDest = ville.id
-    AND mission.idUser = user.id");
+    AND mission.idUser = user.id
+    AND user.idResponsable =" . $_SESSION['id']);
     $req->execute();
-
-    // foreach ($req->fetchAll() as $ligne) {
-    //     $output[] = array(
-    //         'id' => $ligne['id'],
-    //         'nom' => $ligne['nom'],
-    //         'prenom' => $ligne['prenom'],
-    //         'cp' => $ligne['cp'],
-    //         'vil_nom' => $ligne['vil_nom'],
-    //         'debut' => $ligne['debut'],
-    //         'fin' => $ligne['fin'],
-    //         'valide' => $ligne['nom'],
-    //         'paye' => $ligne['nom']
-    //     );
-    // };
-    // print_r($output);
-
-
-
     ?>
-    <div class="container">
+
+    <div class="container my-3">
         <h1>Validation des missions</h1>
         <table class="table">
             <thead>
@@ -49,8 +33,9 @@
             </thead>
             <tbody>
                 <?php
+
+                setlocale(LC_TIME, "fr_FR", "French");
                 while ($donnees = $req->fetch()) {
-                    setlocale(LC_TIME, "fr_FR", "French");
                     $debut = strftime("%A %d %B %G", strtotime($donnees['debut']));
                     $fin = strftime("%A %d %B %G", strtotime($donnees['fin']));
                 ?>
@@ -62,15 +47,16 @@
                         <td><?php echo $donnees['vil_nom'] . " (" . $donnees['cp'] . ")" ?></td>
                         <td>
                             <?php if ($donnees['validée'] == 0) {  ?>
-                                <button type="button" class="btn btn-success btn-sm">Valider</button>
+                                <form action="../php/valide.php" method="POST">
+                                    <button type="submit" class="btn btn-success btn-sm" name="valide" value="<?php echo $donnees['id'] ?>">Valider</button>
+                                </form>
                             <?php } else if ($donnees['validée'] == 1) {
                                 if ($donnees['payée'] == 0) {
                                     echo 'Validée';
                                 } else if ($donnees['payée'] == 1) {
                                     echo 'Validée, Remboursée';
-                                } ?>
-
-                            <?php }  ?>
+                                }
+                            }  ?>
                         </td>
                     </tr>
                 <?php

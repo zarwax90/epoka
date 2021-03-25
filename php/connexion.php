@@ -1,62 +1,78 @@
 <?php
 
-    // récupération des variables du formulaire 
-    $id = $_POST['id'];
-    $mdp = $_POST['mdp'];
+// récupération des variables du formulaire 
+$id = $_POST['id'];
+$mdp = $_POST['mdp'];
 
-    include 'connexionBdd.php';
+include 'connexionBdd.php';
+include '../navbar.php';
 
-    //  Récupération de l'utilisateur et de son pass hashé
-    $req = $bdd->prepare("SELECT * FROM user WHERE id = :id");
-    $req->execute(array(
-        'id' => $id
-    ));
-    $resultat = $req->fetch();
+//  Récupération de l'utilisateur et de son pass hashé
+$req = $bdd->prepare("SELECT * FROM user WHERE id = :id");
+$req->execute(array(
+    'id' => $id
+));
+$resultat = $req->fetch();
 
-    // Comparaison du pass envoyé via le formulaire avec la base
-    $isPasswordCorrect = password_verify($_POST['mdp'], $resultat['mdp']);
+// Comparaison du pass envoyé via le formulaire avec la base
+$isPasswordCorrect = password_verify($_POST['mdp'], $resultat['mdp']);
 
-    if (!$resultat) {
+if (!$resultat) {
+?>
+    <p class="text-center"><strong>Mauvais mot de passe...</strong></p>
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Mauvais mot de passe ...</span>
+        </div>
+    </div>
+    <script>
+        window.setTimeout("location=('http://localhost/epoka/');", 3000);
+    </script>
+    <?php
+} else {
+    if ($isPasswordCorrect) {
+        $_SESSION['id'] = $resultat['id'];
+        $_SESSION['nom'] = $resultat['nom'];
+        $_SESSION['prenom'] = $resultat['prenom'];
+        $_SESSION['peutValider'] = $resultat['peutValider'];
+        $_SESSION['peutPayer'] = $resultat['peutPayer'];
     ?>
-        <script>
-            window.setTimeout("location=('http://localhost/epoka/');", 3000);
-        </script>
-        <p class="text-center"><strong>Mauvais mot de passe...</strong></p>
+        <p class="text-center"><strong>Connexion en cours...</strong></p>
         <div class="d-flex justify-content-center">
             <div class="spinner-border" role="status">
-                <span class="sr-only">Mauvais mot de passe ...</span>
+                <span class="visually-hidden">Connexion en cours...</span>
             </div>
         </div>
         <?php
-    } else {
-        if ($isPasswordCorrect) {
-            session_start();
-            $_SESSION['id'] = $resultat['id'];
-            $_SESSION['nom'] = $resultat['nom'];
-            $_SESSION['prenom'] = $resultat['prenom'];
-        ?>
+        if ($_SESSION['peutPayer'] == 1) { ?>
             <script>
-                window.setTimeout("location=('http://localhost/epoka/');");
+                window.setTimeout("location=('http://localhost/epoka/page_php/paiement.php');");
             </script>
-            <p class="text-center"><strong>Connexion en cours...</strong></p>
-            <div class="d-flex justify-content-center">
-                <div class="spinner-border" role="status">
-                    <span class="sr-only">Connexion en cours...</span>
-                </div>
-            </div>
-        <?php
-        } else {
-        ?>
+        <?php } else if ($_SESSION['peutValider'] == 1) { ?>
             <script>
-                window.setTimeout("location=('http://localhost/epoka/');", 3000);
+                window.setTimeout("location=('http://localhost/epoka/page_php/validation.php');");
             </script>
-            <p class="text-center"><strong>Mauvais mot de passe...</strong></p>
-            <div class="d-flex justify-content-center">
-                <div class="spinner-border" role="status">
-                    <span class="sr-only">Mauvais mot de passe...</span>
-                </div>
-            </div>
+        <?php } else { ?>
+            <script>
+                window.setTimeout("location=('http://localhost/epoka/page_php/parametre.php');");
+            </script>
+        <?php } ?>
+
+        }else{
+        ?>
     <?php
-        }
-    }
+    } else {
     ?>
+        <p class="text-center"><strong>Mauvais mot de passe...</strong></p>
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Mauvais mot de passe...</span>
+            </div>
+        </div>
+        <script>
+            window.setTimeout("location=('http://localhost/epoka/');", 3000);
+        </script>
+<?php
+    }
+}
+?>

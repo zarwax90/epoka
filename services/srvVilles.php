@@ -16,7 +16,7 @@ foreach ($req->fetchAll() as $ligne) {
     $output[] = array(
         'id' => $ligne['id'],
         'cp' => $ligne['cp'],
-        'nom' => $ligne['nom']
+        'nom' => $ligne['vil_nom']
     );
 };
 echo (json_encode($output));
