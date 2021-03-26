@@ -5,8 +5,6 @@ include '../php/connexionBdd.php';
 $nom = $_POST['nom'];
 $ville = $_POST['ville'];
 
-//  Récupération de l'utilisateur et de son pass hashé
-
 try {
     $req = $bdd->prepare("INSERT INTO agence (nom, idVille) VALUES (:nom, :ville)");
     $req->execute(array(
