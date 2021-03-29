@@ -12,10 +12,10 @@
 <body>
     <?php include("../navbar.php");
     $req = $bdd->prepare("SELECT user.nom, user.prenom, ville.cp, ville.vil_nom, mission.id, mission.debut, mission.fin, mission.validée, mission.payée 
-    FROM mission, user, ville 
-    WHERE mission.idDest = ville.id
-    AND mission.idUser = user.id
-    AND user.idResponsable =" . $_SESSION['id']);
+                            FROM mission, user, ville 
+                            WHERE mission.idDest = ville.id
+                            AND mission.idUser = user.id
+                            AND user.idResponsable =" . $_SESSION['id']);
     $req->execute();
     ?>
 

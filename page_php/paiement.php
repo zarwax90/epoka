@@ -41,6 +41,17 @@
 
                         setlocale(LC_TIME, "fr_FR", "French");
                         while ($donnees = $req->fetch()) {
+                            // $req = $bdd->prepare("SELECT d.Km
+                            // FROM distance d 
+                            // JOIN ville v1 ON v1.id = d.idVille1 
+                            // JOIN ville v2 ON v2.id = d.idVille2
+                            // WHERE v1.id = 5404
+                            // AND v2.id = 5262
+                            // OR v1.id = 5262
+                            // AND v2.id = 5404");
+
+                            // $req->execute();
+
                             $debut = strftime("%A %d %B %G", strtotime($donnees['debut']));
                             $fin = strftime("%A %d %B %G", strtotime($donnees['fin']));
                         ?>
@@ -50,14 +61,13 @@
                                 <td><?php echo $debut ?></td>
                                 <td><?php echo $fin; ?></td>
                                 <td><?php echo $donnees['vil_nom'] . " (" . $donnees['cp'] . ")" ?></td>
-                                <td></td>
+                                <td><?php echo "prix non défini" ?></td>
                                 <td>
                                     <?php if ($donnees['validée'] == 0) {  ?>
 
                                         <?php } else if ($donnees['validée'] == 1) {
                                         if ($donnees['payée'] == 0) {
                                         ?>
-
                                             <form action="../php/paie.php" method="POST">
                                                 <button type="submit" class="btn btn-success btn-sm" name="valide" value="<?php echo $donnees['id'] ?>">Rembourser</button>
                                             </form>
