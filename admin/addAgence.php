@@ -33,7 +33,7 @@ include '../php/connexionBdd.php';
                         }
                         while ($donnees = $req->fetch()) {
                         ?>
-                            <option value="<?php echo $donnees['id'] ?>"> <?php echo "(" . $donnees['cp'] . ") " .  utf8_encode ($donnees['nom']) ; ?></option>
+                            <option value="<?php echo $donnees['id'] ?>"> <?php echo "(" . $donnees['cp'] . ") " .  utf8_encode ($donnees['vil_nom']) ; ?></option>
                         <?php
                         }
                         ?>

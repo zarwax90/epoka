@@ -1,7 +1,7 @@
 <?php
+include("../navbar.php");
 if (isset($_SESSION['id'])) {
     if ($_SESSION['peutValider'] == 1) {
-        include '../php/connexionBdd.php';
 
         // récupération des variables du formulaire 
         $id = $_POST['valide'];
