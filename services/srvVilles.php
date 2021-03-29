@@ -1,14 +1,14 @@
 <?php
 include '../php/connexionBdd.php';
 
-$req = $bdd->prepare("SELECT * FROM ville WHERE cp LIKE '38%'");
+$req = $bdd->prepare("SELECT * FROM cities WHERE cp LIKE '38%'");
 $req->execute();
 
 foreach ($req->fetchAll() as $ligne) {
     $output[] = array(
         'id' => $ligne['id'],
         'cp' => $ligne['cp'],
-        'nom' => $ligne['vil_nom']
+        'name' => $ligne['city_name']
     );
 };
 echo (json_encode($output));

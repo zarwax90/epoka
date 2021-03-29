@@ -1,15 +1,15 @@
 <?php
 include("../navbar.php");
 if (isset($_SESSION['id'])) {
-    if ($_SESSION['peutValider'] == 1) {
+    if ($_SESSION['canValidate'] == 1) {
 
         // récupération des variables du formulaire 
         $id = $_POST['valide'];
 
         try {
-            $req = $bdd->prepare("UPDATE mission SET validée = :valide WHERE id = :id");
+            $req = $bdd->prepare("UPDATE missions SET validated = :validate WHERE id = :id");
             $req->execute(array(
-                'valide' => 1,
+                'validate' => 1,
                 'id' => $id
             ));
             header('Location: ../page_php/validation.php');

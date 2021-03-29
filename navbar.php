@@ -26,14 +26,14 @@ include 'php/connexionBdd.php';
                             <a class="nav-link" href="http://localhost/epoka/">Connexion</a>
                         </li>
                         <?php }
-                    if (isset($_SESSION['id']) and isset($_SESSION['nom']) and isset($_SESSION['prenom'])) {
-                        if ($_SESSION['peutValider'] == 1) { ?>
+                    if (isset($_SESSION['id']) and isset($_SESSION['surname']) and isset($_SESSION['name'])) {
+                        if ($_SESSION['canValidate'] == 1) { ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="http://localhost/epoka/page_php/validation.php">Validation des missions</a>
                             </li>
                         <?php }
 
-                        if ($_SESSION['peutPayer'] == 1) { ?>
+                        if ($_SESSION['canPay'] == 1) { ?>
                             <li class="nav-item active">
                                 <a class="nav-link" href="http://localhost/epoka/page_php/paiement.php">Paiement des frais</a>
                             </li>
@@ -45,11 +45,11 @@ include 'php/connexionBdd.php';
 
 
                 </ul>
-                <?php if (isset($_SESSION['id']) and isset($_SESSION['nom']) and isset($_SESSION['prenom'])) { ?>
+                <?php if (isset($_SESSION['id']) and isset($_SESSION['surname']) and isset($_SESSION['name'])) { ?>
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <?php echo $_SESSION['nom'] . " " . $_SESSION['prenom']; ?>
+                                <?php echo $_SESSION['surname'] . " " . $_SESSION['name']; ?>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="http://localhost/epoka/page_php/editMdp.php">Modifier mon mot de passe</a>

@@ -11,11 +11,11 @@
 
 <body>
     <?php include("../navbar.php");
-    $req = $bdd->prepare("SELECT user.nom, user.prenom, ville.cp, ville.vil_nom, mission.id, mission.debut, mission.fin, mission.validée, mission.payée 
-                            FROM mission, user, ville 
-                            WHERE mission.idDest = ville.id
-                            AND mission.idUser = user.id
-                            AND user.idResponsable =" . $_SESSION['id']);
+    $req = $bdd->prepare("SELECT user.name, user.surname, cities.cp, cities.city_name, missions.id, missions.start, missions.end, missions.validated, missions.payed 
+                            FROM missions, user, cities 
+                            WHERE missions.idDest = cities.id
+                            AND missions.idUser = user.id
+                            AND user.idResponsible =" . $_SESSION['id']);
     $req->execute();
     ?>
 
@@ -36,25 +36,25 @@
                 <?php
 
                 setlocale(LC_TIME, "fr_FR", "French");
-                while ($donnees = $req->fetch()) {
-                    $debut = strftime("%A %d %B %G", strtotime($donnees['debut']));
-                    $fin = strftime("%A %d %B %G", strtotime($donnees['fin']));
+                while ($data = $req->fetch()) {
+                    $start = strftime("%A %d %B %G", strtotime($data['start']));
+                    $end = strftime("%A %d %B %G", strtotime($data['end']));
                 ?>
                     <tr>
-                        <td><?php echo $donnees['nom'] ?></td>
-                        <td><?php echo $donnees['prenom'] ?></td>
-                        <td><?php echo $debut ?></td>
-                        <td><?php echo $fin; ?></td>
-                        <td><?php echo $donnees['vil_nom'] . " (" . $donnees['cp'] . ")" ?></td>
+                        <td><?php echo $data['surname'] ?></td>
+                        <td><?php echo $data['name'] ?></td>
+                        <td><?php echo $start ?></td>
+                        <td><?php echo $end; ?></td>
+                        <td><?php echo $data['city_name'] . " (" . $data['cp'] . ")" ?></td>
                         <td>
-                            <?php if ($donnees['validée'] == 0) {  ?>
+                            <?php if ($data['validated'] == 0) {  ?>
                                 <form action="../php/valide.php" method="POST">
-                                    <button type="submit" class="btn btn-success btn-sm" name="valide" value="<?php echo $donnees['id'] ?>">Valider</button>
+                                    <button type="submit" class="btn btn-success btn-sm" name="valide" value="<?php echo $data['id'] ?>">Valider</button>
                                 </form>
-                            <?php } else if ($donnees['validée'] == 1) {
-                                if ($donnees['payée'] == 0) {
+                            <?php } else if ($data['validated'] == 1) {
+                                if ($data['payed'] == 0) {
                                     echo 'Validée';
-                                } else if ($donnees['payée'] == 1) {
+                                } else if ($data['payed'] == 1) {
                                     echo 'Validée, Remboursée';
                                 }
                             }  ?>

@@ -2,16 +2,16 @@
 include '../php/connexionBdd.php';
 
 $idUser = $_GET['idUser'];
-$idVille = $_GET['idVille'];
-$debut = $_GET['debut'];
-$fin = $_GET['fin'];
+$idCity = $_GET['idVille'];
+$start = $_GET['debut'];
+$end = $_GET['fin'];
 
 try {
-    $req = $bdd->prepare("INSERT INTO mission (debut, fin, idDest, idUser) VALUES (:debut, :fin, :idDest, :idUser)");
+    $req = $bdd->prepare("INSERT INTO missions (start, end, idDest, idUser) VALUES (:start, :end, :idDest, :idUser)");
     $req->execute(array(
-        'debut' => $debut,
-        'fin' => $fin,
-        'idDest' => $idVille,
+        'start' => $start,
+        'end' => $end,
+        'idDest' => $idCity,
         'idUser' => $idUser
     ));
     echo ('Mission ajoutée avec succès');

@@ -1,16 +1,16 @@
 <?php
 include("../navbar.php");
 if (isset($_SESSION['id'])) {
-    if ($_SESSION['peutPayer'] == 1) {
+    if ($_SESSION['canPay'] == 1) {
         
 
         // récupération des variables du formulaire 
         $id = $_POST['valide'];
 
         try {
-            $req = $bdd->prepare("UPDATE mission SET payée = :paie WHERE id = :id");
+            $req = $bdd->prepare("UPDATE missions SET payed = :pay WHERE id = :id");
             $req->execute(array(
-                'paie' => 1,
+                'pay' => 1,
                 'id' => $id
             ));
             header('Location: ../page_php/paiement.php');

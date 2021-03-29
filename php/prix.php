@@ -6,10 +6,10 @@ $km = $_POST['inputKm'];
 $ind = $_POST['inputInd'];
 
 try {
-    $req = $bdd->prepare("UPDATE parametre SET prixKm = :km, prixJournee = :journee");
+    $req = $bdd->prepare("UPDATE settings SET priceKm = :km, priceDay = :day");
     $req->execute(array(
         'km' => $km,
-        'journee' => $ind
+        'day' => $ind
     ));
     header('Location: ../page_php/parametre.php');
 } catch (Exception $e) {

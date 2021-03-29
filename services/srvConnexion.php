@@ -12,17 +12,17 @@ include '../php/connexionBdd.php';
 
 // récupération des variables du formulaire 
 $id = $_GET['id'];
-$mdp = $_GET['mdp'];
+$password = $_GET['mdp'];
 
 //  Récupération de l'utilisateur et de son pass hashé
-$req = $bdd->prepare("SELECT id, nom, prenom, mdp, peutValider, peutPayer, idAgence FROM user WHERE id = :id");
+$req = $bdd->prepare("SELECT id, surname, name, password, canValidate, canPay, idAgency FROM user WHERE id = :id");
 $req->execute(array(
     'id' => $id
 ));
 $resultat = $req->fetch();
 
 // Comparaison du pass envoyé via le formulaire avec la base
-$isPasswordCorrect = password_verify($mdp, $resultat['mdp']);
+$isPasswordCorrect = password_verify($password, $resultat['password']);
 
 if (!$resultat) {
     echo 'user ou mdp incorrect';

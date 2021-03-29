@@ -12,20 +12,20 @@
 <body>
     <?php include("../navbar.php");
 
-    $req = $bdd->prepare("SELECT * FROM ville WHERE cp LIKE '38%'");
+    $req = $bdd->prepare("SELECT * FROM cities WHERE cp LIKE '38%'");
     $req->execute();
-    $donnees = $req->fetchAll();
+    $datas = $req->fetchAll();
 
-    $req2 = $bdd->prepare("SELECT d.Km, v1.vil_nom AS ville1, v2.vil_nom AS ville2 
+    $req2 = $bdd->prepare("SELECT d.Km, v1.city_name AS city1, v2.city_name AS city2 
                             FROM distance d 
-                            JOIN ville v1 ON v1.id = d.idVille1 
-                            JOIN ville v2 ON v2.id = d.idVille2");
+                            JOIN cities v1 ON v1.id = d.idcity1 
+                            JOIN cities v2 ON v2.id = d.idcity2");
     $req2->execute();
-    $donnees2 = $req2->fetchAll();
+    $datas2 = $req2->fetchAll();
 
-    $req3 = $bdd->prepare("SELECT * FROM parametre");
+    $req3 = $bdd->prepare("SELECT * FROM settings");
     $req3->execute();
-    $donnees3 = $req3->fetch();
+    $datas3 = $req3->fetch();
     ?>
     <div class="container my-3">
         <h1>Paramétrage de l'application</h1>
@@ -56,8 +56,8 @@
                         <div class="card-body">
                             <h5 class="card-title">Paramètre actuel</h5>
                             <p class="card-text">
-                                <div>Prix km : <strong><?php echo $donnees3['prixKm'] ?></strong></div>
-                                <div>Indemnité : <strong><?php echo $donnees3['prixJournee'] ?></strong></div>
+                                <div>Prix km : <strong><?php echo $datas3['priceKm'] ?></strong></div>
+                                <div>Indemnité : <strong><?php echo $datas3['priceDay'] ?></strong></div>
                             </p>
                         </div>
                     </div>
@@ -71,15 +71,15 @@
                     <span class="input-group-text">De :</span>
                     <input class="form-control" list="datalistOptions" id="ville1" name="ville1" placeholder="Choisir une ville..." required>
                     <datalist id="datalistOptions">
-                        <?php foreach ($donnees as $donnee) {
-                            echo ('<option value="' . $donnee['vil_nom'] . '"> (' . $donnee['cp'] . ')');
+                        <?php foreach ($datas as $data) {
+                            echo ('<option value="' . $data['city_name'] . '"> (' . $data['cp'] . ')');
                         } ?>
                     </datalist>
                     <span class="input-group-text">À :</span>
                     <input class="form-control" list="datalistOptions" id="ville2" name="ville2" placeholder="Choisir une ville..." required>
                     <datalist id="datalistOptions">
-                        <?php foreach ($donnees as $donnee) {
-                            echo ('<option value="' . $donnee['vil_nom'] . '"> (' . $donnee['cp'] . ')');
+                        <?php foreach ($datas as $data) {
+                            echo ('<option value="' . $data['city_name'] . '"> (' . $data['cp'] . ')');
                         } ?>
                     </datalist>
                     <span class="input-group-text">Distance en km :</span>
@@ -103,11 +103,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($donnees2 as $donnee2) { ?>
+                        <?php foreach ($datas2 as $data2) { ?>
                             <tr>
-                                <td><?php echo  $donnee2['ville1'] ?></td>
-                                <td><?php echo  $donnee2['ville2'] ?></td>
-                                <td><?php echo  $donnee2['Km'] ?></td>
+                                <td><?php echo  $data2['city1'] ?></td>
+                                <td><?php echo  $data2['city2'] ?></td>
+                                <td><?php echo  $data2['Km'] ?></td>
                             </tr>
                         <?php } ?>
                     </tbody>

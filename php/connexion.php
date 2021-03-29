@@ -15,7 +15,7 @@ $req->execute(array(
 $resultat = $req->fetch();
 
 // Comparaison du pass envoyé via le formulaire avec la base
-$isPasswordCorrect = password_verify($_POST['mdp'], $resultat['mdp']);
+$isPasswordCorrect = password_verify($_POST['mdp'], $resultat['password']);
 
 if (!$resultat) {
 ?>
@@ -32,10 +32,10 @@ if (!$resultat) {
 } else {
     if ($isPasswordCorrect) {
         $_SESSION['id'] = $resultat['id'];
-        $_SESSION['nom'] = $resultat['nom'];
-        $_SESSION['prenom'] = $resultat['prenom'];
-        $_SESSION['peutValider'] = $resultat['peutValider'];
-        $_SESSION['peutPayer'] = $resultat['peutPayer'];
+        $_SESSION['surname'] = $resultat['surname'];
+        $_SESSION['name'] = $resultat['name'];
+        $_SESSION['canValidate'] = $resultat['canValidate'];
+        $_SESSION['canPay'] = $resultat['canPay'];
     ?>
         <p class="text-center"><strong>Connexion en cours...</strong></p>
         <div class="d-flex justify-content-center">
@@ -44,11 +44,11 @@ if (!$resultat) {
             </div>
         </div>
         <?php
-        if ($_SESSION['peutPayer'] == 1) { ?>
+        if ($_SESSION['canPay'] == 1) { ?>
             <script>
                 window.setTimeout("location=('http://localhost/epoka/page_php/paiement.php');");
             </script>
-        <?php } else if ($_SESSION['peutValider'] == 1) { ?>
+        <?php } else if ($_SESSION['canValidate'] == 1) { ?>
             <script>
                 window.setTimeout("location=('http://localhost/epoka/page_php/validation.php');");
             </script>
@@ -57,9 +57,6 @@ if (!$resultat) {
                 window.setTimeout("location=('http://localhost/epoka/');");
             </script>
         <?php } ?>
-
-        }else{
-        ?>
     <?php
     } else {
     ?>
