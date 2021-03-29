@@ -38,7 +38,6 @@
                     </thead>
                     <tbody>
                         <?php
-
                         setlocale(LC_TIME, "fr_FR", "French");
                         while ($donnees = $req->fetch()) {
                             // $req = $bdd->prepare("SELECT d.Km
@@ -63,11 +62,10 @@
                                 <td><?php echo $donnees['vil_nom'] . " (" . $donnees['cp'] . ")" ?></td>
                                 <td><?php echo "prix non défini" ?></td>
                                 <td>
-                                    <?php if ($donnees['validée'] == 0) {  ?>
-
-                                        <?php } else if ($donnees['validée'] == 1) {
+                                    <?php if ($donnees['validée'] == 0) {
+                                    } else if ($donnees['validée'] == 1) {
                                         if ($donnees['payée'] == 0) {
-                                        ?>
+                                    ?>
                                             <form action="../php/paie.php" method="POST">
                                                 <button type="submit" class="btn btn-success btn-sm" name="valide" value="<?php echo $donnees['id'] ?>">Rembourser</button>
                                             </form>
