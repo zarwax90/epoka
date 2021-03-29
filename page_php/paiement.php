@@ -55,12 +55,12 @@
                             $end = strftime("%A %d %B %G", strtotime($data['end']));
                         ?>
                             <tr>
-                                <td><?php echo $data['surname'] ?></td>
-                                <td><?php echo $data['name'] ?></td>
-                                <td><?php echo $start ?></td>
-                                <td><?php echo $end; ?></td>
-                                <td><?php echo $data['city_name'] . " (" . $data['cp'] . ")" ?></td>
-                                <td><?php echo "prix non défini" ?></td>
+                                <td><?= htmlspecialchars($data['surname']) ?></td>
+                                <td><?= htmlspecialchars($data['name']) ?></td>
+                                <td><?= htmlspecialchars($start) ?></td>
+                                <td><?= htmlspecialchars($end) ?></td>
+                                <td><?= htmlspecialchars($data['city_name'] . " (" . $data['cp'] . ")") ?></td>
+                                <td><?= htmlspecialchars("prix non défini") ?></td>
                                 <td>
                                     <?php if ($data['validated'] == 0) {
                                     } else if ($data['validated'] == 1) {

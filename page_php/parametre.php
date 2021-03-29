@@ -56,8 +56,8 @@
                         <div class="card-body">
                             <h5 class="card-title">Paramètre actuel</h5>
                             <p class="card-text">
-                                <div>Prix km : <strong><?php echo $datas3['priceKm'] ?></strong></div>
-                                <div>Indemnité : <strong><?php echo $datas3['priceDay'] ?></strong></div>
+                                <div>Prix km : <strong><?= htmlspecialchars($datas3['priceKm']) ?></strong></div>
+                                <div>Indemnité : <strong><?= htmlspecialchars($datas3['priceDay']) ?></strong></div>
                             </p>
                         </div>
                     </div>
@@ -105,9 +105,9 @@
                     <tbody>
                         <?php foreach ($datas2 as $data2) { ?>
                             <tr>
-                                <td><?php echo  $data2['city1'] ?></td>
-                                <td><?php echo  $data2['city2'] ?></td>
-                                <td><?php echo  $data2['Km'] ?></td>
+                                <td><?= htmlspecialchars($data2['city1']) ?></td>
+                                <td><?= htmlspecialchars($data2['city2']) ?></td>
+                                <td><?= htmlspecialchars($data2['Km']) ?></td>
                             </tr>
                         <?php } ?>
                     </tbody>

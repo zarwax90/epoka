@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <?php include("../navbar.php");
+    <?php require("../navbar.php");
     $req = $bdd->prepare("SELECT user.name, user.surname, cities.cp, cities.city_name, missions.id, missions.start, missions.end, missions.validated, missions.payed 
                             FROM missions, user, cities 
                             WHERE missions.idDest = cities.id
@@ -41,11 +41,11 @@
                     $end = strftime("%A %d %B %G", strtotime($data['end']));
                 ?>
                     <tr>
-                        <td><?php echo $data['surname'] ?></td>
-                        <td><?php echo $data['name'] ?></td>
-                        <td><?php echo $start ?></td>
-                        <td><?php echo $end; ?></td>
-                        <td><?php echo $data['city_name'] . " (" . $data['cp'] . ")" ?></td>
+                        <td><?= htmlspecialchars($data['surname']) ?></td>
+                        <td><?= htmlspecialchars($data['name']) ?></td>
+                        <td><?= htmlspecialchars($start) ?></td>
+                        <td><?= htmlspecialchars($end) ?></td>
+                        <td><?= htmlspecialchars($data['city_name'] . " (" . $data['cp'] . ")" )?></td>
                         <td>
                             <?php if ($data['validated'] == 0) {  ?>
                                 <form action="../php/valide.php" method="POST">
