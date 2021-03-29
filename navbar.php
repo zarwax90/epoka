@@ -37,10 +37,10 @@ include 'php/connexionBdd.php';
                             <li class="nav-item active">
                                 <a class="nav-link" href="http://localhost/epoka/page_php/paiement.php">Paiement des frais</a>
                             </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="http://localhost/epoka/page_php/parametre.php">Paramétrage</a>
+                            </li>
                         <?php } ?>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="http://localhost/epoka/page_php/parametre.php">Paramétrage</a>
-                        </li>
                     <?php } ?>
 
 

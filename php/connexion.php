@@ -54,7 +54,7 @@ if (!$resultat) {
             </script>
         <?php } else { ?>
             <script>
-                window.setTimeout("location=('http://localhost/epoka/page_php/parametre.php');");
+                window.setTimeout("location=('http://localhost/epoka/');");
             </script>
         <?php } ?>
 
