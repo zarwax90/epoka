@@ -1,46 +1,65 @@
-<!DOCTYPE html>
-<html lang="fr">
+<?php
+require('controller/controller.php');
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="images/dragon.png" />
-    <title>Identification</title>
-</head>
+if (isset($_GET['action'])) {
+    // Validation
+    if ($_GET['action'] == 'validation' and isset($_SESSION['id']) and $_SESSION['canValidate'] == 1) {
+        listValidation();
 
-<body>
-    <?php include("navbar.php"); ?>
+        // MAJ validation
+    } else if ($_GET['action'] == 'updateValidation' and isset($_SESSION['id']) and $_SESSION['canValidate'] == 1) {
+        if (!empty($_POST['valide'])) {
+            updateValidation($_POST['valide']);
+        } else {
+            echo 'Erreur : tous les champs ne sont pas remplis !';
+        }
 
-    <div class="container my-3">
+        // Payment
+    } else if ($_GET['action'] == 'payment' and isset($_SESSION['id']) and $_SESSION['canPay'] == 1) {
+        listPayment();
 
+        // MAJ payment
+    } else if ($_GET['action'] == 'updatePayment' and isset($_SESSION['id']) and $_SESSION['canPay'] == 1) {
+        if (!empty($_POST['valide'])) {
+            updatePayment($_POST['valide']);
+        } else {
+            echo 'Erreur : tous les champs ne sont pas remplis !';
+        }
 
+        // Parametre
+    } else if ($_GET['action'] == 'parametre' and isset($_SESSION['id']) and $_SESSION['canPay'] == 1) {
+        listSettings();
 
-        <?php if (isset($_SESSION['id'])) { ?>
-            <div class="alert alert-warning" role="alert">
-                Vous êtes connecté !
-            </div>
-        <?php } else { ?>
-            <form method="POST" action="php/connexion.php" class="was-validated">
-                <div class="row">
-                    <div class="form-group col-md-4 mb-3">
-                        <label for="inputPassword4">Identifiant</label>
-                        <input type="number" placeholder="Identifiant" class="form-control" id="id" name="id" min="1" required>
-                    </div>
-                    <div class="form-group col-md-4 mb-3">
-                        <label for="inputPassword4">Mot de passe</label>
-                        <input type="password" placeholder="Mot de passe" class="form-control" id="inputPassword4" name="mdp" required>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <button type="submit" class="btn btn-primary">Connexion</button>
-                </div>
-            </form>
-            <div class="alert alert-danger" role="alert">
-                Vous n'êtes pas connecté !
-            </div>
-        <?php } ?>
-    </div>
-</body>
+        // MAJ parametre
+    } else if ($_GET['action'] == 'updateSettings' and isset($_SESSION['id']) and $_SESSION['canPay'] == 1) {
+        if (!empty($_POST['inputKm']) && !empty($_POST['inputInd'])) {
+            updateSettings($_POST['inputKm'], $_POST['inputInd']);
+        } else {
+            echo 'Erreur : tous les champs ne sont pas remplis !';
+        }
 
-</html>
+        // Distance
+    } else if ($_GET['action'] == 'distance' and isset($_SESSION['id']) and $_SESSION['canPay'] == 1) {
+        if (!empty($_POST['ville1']) && !empty($_POST['ville2']) && !empty($_POST['km'])) {
+            distance($_POST['ville1'], $_POST['ville2'], $_POST['km']);
+        } else {
+            echo 'Erreur : tous les champs ne sont pas remplis !';
+        }
+
+        // Déconnexion
+    } else if ($_GET['action'] == 'deconnexion') {
+        deconnexion();
+
+        // Connexion
+    } else if ($_GET['action'] == 'connexion') {
+        if (!empty($_POST['id']) && !empty($_POST['password'])) {
+            getConnexion($_POST['id'], $_POST['password']);
+        } else {
+            echo 'Erreur : tous les champs ne sont pas remplis !';
+        }
+    } else {
+        header('Location: index.php');
+    }
+} else {
+    index();
+}
