@@ -20,8 +20,8 @@ if (isset($_GET['action'])) {
 
         // MAJ payment
     } else if ($_GET['action'] == 'updatePayment' and isset($_SESSION['id']) and $_SESSION['canPay'] == 1) {
-        if (!empty($_POST['valide'])) {
-            payment($_POST['valide']);
+        if (!empty($_POST['valide']) && !empty($_POST['price'])) {
+            payment($_POST['valide'], $_POST['price']);
         } else {
             header('Location: index.php?action=payment');
         }

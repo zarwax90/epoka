@@ -18,13 +18,14 @@ class UpdateManager extends Manager
     }
 
     // Modification d'une validation
-    public function updatePayment($id)
+    public function updatePayment($id,$price)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare("UPDATE missions SET payed = :pay WHERE id = :id");
+        $req = $db->prepare("UPDATE missions SET payed = :pay, priceMission = :price WHERE id = :id");
         $statutPayment = $req->execute(array(
             'pay' => 1,
-            'id' => $id
+            'id' => $id,
+            'price' => $price
         ));
 
         return $statutPayment;

@@ -70,16 +70,8 @@ function listSettings()
 
     $getManager = new GetManager();
     $settings = $getManager->getSettings();
-
-    $getManager = new GetManager();
     $cities = $getManager->getCities();
-
-    $getManager = new GetManager();
     $distance = $getManager->getDistance();
-
-    
-    
-    
 
     require('view/settingsView.php');
 }
@@ -124,13 +116,11 @@ function validation($id)
     }
 }
 
-function payment($id)
+function payment($id,$price)
 {
-
     
     $updateManager = new UpdateManager();
-    $statutPayment = $updateManager->updatePayment($id);
-
+    $statutPayment = $updateManager->updatePayment($id,$price);
     
     if ($statutPayment === false) {
         die('Impossible de valider !');
