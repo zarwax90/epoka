@@ -52,7 +52,7 @@ session_start();
                                 <?php echo $_SESSION['surname'] . " " . $_SESSION['name']; ?>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="http://localhost/epoka/page_php/editMdp.php">Modifier mon mot de passe</a>
+                                <a class="dropdown-item" href="index.php?action=editPassword">Modifier mon mot de passe</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="index.php?action=deconnexion">Se déconnecter</a>
                             </div>
