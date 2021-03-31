@@ -1,6 +1,9 @@
 <?php
 require('navbar.php');
-require('model/model.php');
+require_once('model/GetManager.php');
+require_once('model/PostManager.php');
+require_once('model/UpdateManager.php');
+
 function index()
 {
     require('view/connectionView.php');
@@ -8,7 +11,9 @@ function index()
 
 function getConnexion($id, $password)
 {
-    $req = connexion($id, $password);
+
+    $getManager = new GetManager();
+    $req = $getManager->connexion($id, $password);
 
     $resultat = $req->fetch();
 
@@ -45,29 +50,44 @@ function deconnexion()
 
 function listValidation()
 {
-    $valide = getValidation();
+    $getManager = new GetManager();
+    $valide = $getManager->getValidation();
 
     require('view/validationView.php');
 }
 
 function listPayment()
 {
-    $pay = getPayment();
+   
+    $getManager = new GetManager();
+    $pay = $getManager->getPayment();
 
     require('view/paymentView.php');
 }
 
 function listSettings()
 {
-    $settings = getSettings();
-    $cities = getCities();
-    $distance = getDistance();
+
+    $getManager = new GetManager();
+    $settings = $getManager->getSettings();
+
+    $getManager = new GetManager();
+    $cities = $getManager->getCities();
+
+    $getManager = new GetManager();
+    $distance = $getManager->getDistance();
+
+    
+    
+    
 
     require('view/settingsView.php');
 }
 function distance($city1, $city2, $km)
 {
-    $affectedLines = postDistance($city1, $city2, $km);
+
+    $postManager = new PostManager();
+    $affectedLines = $postManager->postDistance($city1, $city2, $km);
 
     if ($affectedLines === false) {
         die('Impossible d\'ajouter la distance !');
@@ -78,7 +98,10 @@ function distance($city1, $city2, $km)
 
 function updateSettings($km, $ind)
 {
-    $affectedLines = postSettings($km, $ind);
+
+    
+    $updateManager = new UpdateManager();
+    $affectedLines = $updateManager->updateSettings($km, $ind);
 
     if ($affectedLines === false) {
         die('Impossible de mettre à jour les paramètres !');
@@ -89,7 +112,11 @@ function updateSettings($km, $ind)
 
 function updateValidation($id)
 {
-    $statutValidation = postValidation($id);
+    
+    $updateManager = new UpdateManager();
+    $statutValidation =$updateManager->updateValidation($id);
+
+    
     if ($statutValidation === false) {
         die('Impossible de valider !');
     } else {
@@ -99,7 +126,12 @@ function updateValidation($id)
 
 function updatePayment($id)
 {
-    $statutPayment = postPayment($id);
+
+    
+    $updateManager = new UpdateManager();
+    $statutPayment = $updateManager->updatePayment($id);
+
+    
     if ($statutPayment === false) {
         die('Impossible de valider !');
     } else {
