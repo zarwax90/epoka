@@ -9,9 +9,9 @@ if (isset($_GET['action'])) {
         // MAJ validation
     } else if ($_GET['action'] == 'updateValidation' and isset($_SESSION['id']) and $_SESSION['canValidate'] == 1) {
         if (!empty($_POST['valide'])) {
-            updateValidation($_POST['valide']);
+            validation($_POST['valide']);
         } else {
-            echo 'Erreur : tous les champs ne sont pas remplis !';
+            header('Location: index.php?action=validation');
         }
 
         // Payment
@@ -21,9 +21,9 @@ if (isset($_GET['action'])) {
         // MAJ payment
     } else if ($_GET['action'] == 'updatePayment' and isset($_SESSION['id']) and $_SESSION['canPay'] == 1) {
         if (!empty($_POST['valide'])) {
-            updatePayment($_POST['valide']);
+            payment($_POST['valide']);
         } else {
-            echo 'Erreur : tous les champs ne sont pas remplis !';
+            header('Location: index.php?action=payment');
         }
 
         // Parametre
@@ -33,9 +33,9 @@ if (isset($_GET['action'])) {
         // MAJ parametre
     } else if ($_GET['action'] == 'updateSettings' and isset($_SESSION['id']) and $_SESSION['canPay'] == 1) {
         if (!empty($_POST['inputKm']) && !empty($_POST['inputInd'])) {
-            updateSettings($_POST['inputKm'], $_POST['inputInd']);
+            settings($_POST['inputKm'], $_POST['inputInd']);
         } else {
-            echo 'Erreur : tous les champs ne sont pas remplis !';
+            header('Location: index.php?action=parametre');
         }
 
         // Distance
@@ -43,7 +43,7 @@ if (isset($_GET['action'])) {
         if (!empty($_POST['ville1']) && !empty($_POST['ville2']) && !empty($_POST['km'])) {
             distance($_POST['ville1'], $_POST['ville2'], $_POST['km']);
         } else {
-            echo 'Erreur : tous les champs ne sont pas remplis !';
+            header('Location: index.php?action=parametre');
         }
 
         // Déconnexion
@@ -53,7 +53,7 @@ if (isset($_GET['action'])) {
         // Connexion
     } else if ($_GET['action'] == 'connexion') {
         if (!empty($_POST['id']) && !empty($_POST['password'])) {
-            getConnexion($_POST['id'], $_POST['password']);
+            connexion($_POST['id'], $_POST['password']);
         } else {
             echo 'Erreur : tous les champs ne sont pas remplis !';
         }
