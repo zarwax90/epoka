@@ -7,7 +7,7 @@ class PostManager extends Manager
     // Ajout d'une distance
     public function postDistance($city1, $city2, $km)
     {
-        $db = Manager::dbConnect();
+        $db = $this->dbConnect();
         try {
             $req = $db->prepare("SELECT cities.id FROM cities WHERE cities.city_name = :city1");
             $req->execute(array(
