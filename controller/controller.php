@@ -9,11 +9,11 @@ function index()
     require('view/connectionView.php');
 }
 
-function getConnexion($id, $password)
+function connexion($id, $password)
 {
 
     $getManager = new GetManager();
-    $req = $getManager->connexion($id, $password);
+    $req = $getManager->getConnexion($id, $password);
 
     $resultat = $req->fetch();
 
@@ -96,7 +96,7 @@ function distance($city1, $city2, $km)
     }
 }
 
-function updateSettings($km, $ind)
+function settings($km, $ind)
 {
 
     
@@ -110,7 +110,7 @@ function updateSettings($km, $ind)
     }
 }
 
-function updateValidation($id)
+function validation($id)
 {
     
     $updateManager = new UpdateManager();
@@ -124,7 +124,7 @@ function updateValidation($id)
     }
 }
 
-function updatePayment($id)
+function payment($id)
 {
 
     
