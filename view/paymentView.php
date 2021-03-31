@@ -21,6 +21,9 @@
             while ($data = $pay->fetch()) {
                 $start = strftime("%A %d %B %G", strtotime($data['start']));
                 $end = strftime("%A %d %B %G", strtotime($data['end']));
+
+                $getManager = new GetManager();
+                $price = $getManager->getPriceMission($data['id']);
             ?>
                 <tr>
                     <td><?= htmlspecialchars($data['surname']) ?></td>
@@ -28,13 +31,16 @@
                     <td><?= htmlspecialchars($start) ?></td>
                     <td><?= htmlspecialchars($end) ?></td>
                     <td><?= htmlspecialchars($data['city_name'] . " (" . $data['cp'] . ")") ?></td>
-                    <td><?= htmlspecialchars("prix non défini") ?></td>
+                    <td>
+                        <?= htmlspecialchars($price) ?>
+                    </td>
                     <td>
                         <?php if ($data['validated'] == 0) {
                         } else if ($data['validated'] == 1) {
-                            if ($data['payed'] == 0) {
+                            if ($data['payed'] == 0 and $price != 'Distance non défini') {
                         ?>
                                 <form action="index.php?action=updatePayment" method="POST">
+                                    <input type="hidden" name="price" value="<?= htmlspecialchars($price) ?>">
                                     <button type="submit" class="btn btn-success btn-sm" name="valide" value="<?php echo $data['id'] ?>">Rembourser</button>
                                 </form>
                         <?php
