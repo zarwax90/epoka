@@ -1,7 +1,7 @@
 <?php
-include '../php/connexionBdd.php';
+include 'connexionBdd.php';
 
-$req = $bdd->prepare("SELECT * FROM cities WHERE cp LIKE '38%'");
+$req = $db->prepare("SELECT * FROM cities WHERE cp LIKE '38%'");
 $req->execute();
 
 foreach ($req->fetchAll() as $ligne) {

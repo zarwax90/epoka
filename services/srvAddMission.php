@@ -1,5 +1,5 @@
 <?php
-include '../php/connexionBdd.php';
+include 'connexionBdd.php';
 
 $idUser = $_GET['idUser'];
 $idCity = $_GET['idVille'];
@@ -7,7 +7,7 @@ $start = $_GET['debut'];
 $end = $_GET['fin'];
 
 try {
-    $req = $bdd->prepare("INSERT INTO missions (start, end, idDest, idUser) VALUES (:start, :end, :idDest, :idUser)");
+    $req = $db->prepare("INSERT INTO missions (start, end, idDest, idUser) VALUES (:start, :end, :idDest, :idUser)");
     $req->execute(array(
         'start' => $start,
         'end' => $end,
