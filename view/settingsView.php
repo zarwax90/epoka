@@ -1,9 +1,9 @@
 <?php $title = 'Paramètres'; ?>
 
 <?php ob_start(); ?>
-<?php $datas = $cities->fetchAll();?>
-<?php $datas2 = $distance->fetchAll();?>
-<?php $datas3 = $settings->fetch();?>
+<?php $datas = $cities->fetchAll(); ?>
+<?php $datas2 = $distance->fetchAll(); ?>
+<?php $datas3 = $settings->fetch(); ?>
 <div class="container my-3">
     <h1>Paramétrage de l'application</h1>
     <div class="border border-primary border-2 rounded">
@@ -46,17 +46,19 @@
             <h2>Distance entre les villes</h2>
             <div class="input-group mb-3">
                 <span class="input-group-text">De :</span>
-                <input class="form-control" list="datalistOptions" id="ville1" name="ville1" placeholder="Choisir une ville..." required>
-                <datalist id="datalistOptions">
+                <input type="hidden" id="text1" name="text1" required>
+                <input class="form-control" list="city1" id="ville1" placeholder="Choisir une ville..." required>
+                <datalist id="city1">
                     <?php foreach ($datas as $data) {
-                        echo ('<option value="' . $data['city_name'] . '"> (' . $data['cp'] . ')');
+                        echo ('<option id="' . $data['id'] . '" value="' . $data['city_name'] . '"> (' . $data['cp'] . ')');
                     } ?>
                 </datalist>
                 <span class="input-group-text">À :</span>
-                <input class="form-control" list="datalistOptions" id="ville2" name="ville2" placeholder="Choisir une ville..." required>
-                <datalist id="datalistOptions">
+                <input type="hidden" id="text2" name="text2" required>
+                <input class="form-control" list="city2" id="ville2" placeholder="Choisir une ville..." required>
+                <datalist id="city2">
                     <?php foreach ($datas as $data) {
-                        echo ('<option value="' . $data['city_name'] . '"> (' . $data['cp'] . ')');
+                        echo ('<option id="' . $data['id'] . '" value="' . $data['city_name'] . '"> (' . $data['cp'] . ')');
                     } ?>
                 </datalist>
                 <span class="input-group-text">Distance en km :</span>
@@ -91,7 +93,38 @@
             </table>
         </div>
     </div>
-
 </div>
+
+<script>
+    const ville1 = document.getElementById('ville1');
+    const ville2 = document.getElementById('ville2');
+    const city1 = document.getElementById('city1');
+    const city2 = document.getElementById('city2');
+    const text1 = document.getElementById('text1');
+    const text2 = document.getElementById('text2');
+
+    ville1.addEventListener('input', () => {
+        const index = [...city1.options]
+            .map(o => o.value)
+            .indexOf(ville1.value)
+        if (index === -1) {
+            text1.value = ""
+        } else {
+            text1.value = city1.options[index].id;
+        }
+    })
+
+    ville2.addEventListener('input', () => {
+        const index = [...city2.options]
+            .map(o => o.value)
+            .indexOf(ville2.value)
+        if (index === -1) {
+            text2.value = ""
+        } else {
+            text2.value = city2.options[index].id;
+        }
+    })
+</script>
+
 <?php $content = ob_get_clean(); ?>
 <?php require('template.php'); ?>

@@ -58,7 +58,7 @@ function listValidation()
 
 function listPayment()
 {
-   
+
     $getManager = new GetManager();
     $pay = $getManager->getPayment();
 
@@ -91,7 +91,7 @@ function distance($city1, $city2, $km)
 function settings($km, $ind)
 {
 
-    
+
     $updateManager = new UpdateManager();
     $affectedLines = $updateManager->updateSettings($km, $ind);
 
@@ -104,11 +104,11 @@ function settings($km, $ind)
 
 function validation($id)
 {
-    
-    $updateManager = new UpdateManager();
-    $statutValidation =$updateManager->updateValidation($id);
 
-    
+    $updateManager = new UpdateManager();
+    $statutValidation = $updateManager->updateValidation($id);
+
+
     if ($statutValidation === false) {
         die('Impossible de valider !');
     } else {
@@ -116,12 +116,12 @@ function validation($id)
     }
 }
 
-function payment($id,$price)
+function payment($id, $price)
 {
-    
+
     $updateManager = new UpdateManager();
-    $statutPayment = $updateManager->updatePayment($id,$price);
-    
+    $statutPayment = $updateManager->updatePayment($id, $price);
+
     if ($statutPayment === false) {
         die('Impossible de valider !');
     } else {

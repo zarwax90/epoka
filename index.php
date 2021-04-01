@@ -40,8 +40,9 @@ if (isset($_GET['action'])) {
 
         // Distance
     } else if ($_GET['action'] == 'distance' and isset($_SESSION['id']) and $_SESSION['canPay'] == 1) {
-        if (!empty($_POST['ville1']) && !empty($_POST['ville2']) && !empty($_POST['km'])) {
-            distance($_POST['ville1'], $_POST['ville2'], $_POST['km']);
+        if (!empty($_POST['text1']) && !empty($_POST['text2']) && !empty($_POST['km'])) {
+            distance($_POST['text1'], $_POST['text2'], $_POST['km']);
+
         } else {
             header('Location: index.php?action=parametre');
         }
