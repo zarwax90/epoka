@@ -54,7 +54,7 @@ class GetManager extends Manager
     }
 
     // Connexion
-    public function getConnexion($id, $password)
+    public function getConnexion($id)
     {
         $db = $this->dbConnect();
         $req = $db->prepare("SELECT * FROM user WHERE id = :id");

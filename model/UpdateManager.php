@@ -18,7 +18,7 @@ class UpdateManager extends Manager
     }
 
     // Modification d'une validation
-    public function updatePayment($id,$price)
+    public function updatePayment($id, $price)
     {
         $db = $this->dbConnect();
         $req = $db->prepare("UPDATE missions SET payed = :pay, priceMission = :price WHERE id = :id");
@@ -39,6 +39,20 @@ class UpdateManager extends Manager
         $affectedLines = $req->execute(array(
             'km' => $km,
             'day' => $ind
+        ));
+
+        return $affectedLines;
+    }
+
+    // Modification du mot de passe
+    public function updatePassword($password, $id)
+    {
+        $db = $this->dbConnect();
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        $req = $db->prepare('UPDATE user SET password = :password WHERE id = :id');
+        $affectedLines = $req->execute(array(
+            'password' => $password,
+            'id' => $id
         ));
 
         return $affectedLines;

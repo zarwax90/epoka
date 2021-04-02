@@ -42,11 +42,21 @@ if (isset($_GET['action'])) {
     } else if ($_GET['action'] == 'distance' and isset($_SESSION['id']) and $_SESSION['canPay'] == 1) {
         if (!empty($_POST['text1']) && !empty($_POST['text2']) && !empty($_POST['km'])) {
             distance($_POST['text1'], $_POST['text2'], $_POST['km']);
-
         } else {
             header('Location: index.php?action=parametre');
         }
 
+        // Formulaire pour modification mot de passe
+    } else if ($_GET['action'] == 'editPassword' and isset($_SESSION['id'])) {
+        password();
+
+      // Modification du mot de passe
+    } else if ($_GET['action'] == 'updatePassword' and isset($_SESSION['id'])) {
+        if (!empty($_POST['password'] && $_SESSION['id'])) {
+            newPassword($_POST['password'], $_SESSION['id']);
+        } else {
+            header('Location: index.php?action=parametre');
+        }
         // Déconnexion
     } else if ($_GET['action'] == 'deconnexion') {
         deconnexion();

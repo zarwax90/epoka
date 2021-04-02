@@ -9,11 +9,28 @@ function index()
     require('view/connectionView.php');
 }
 
+function password()
+{
+    require('view/editPasswordView.php');
+}
+
+function newPassword($password, $id)
+{
+    $updateManager = new UpdateManager();
+    $affectedLines = $updateManager->updatePassword($password, $id);
+
+    if ($affectedLines === false) {
+        die('Impossible de modifier votre mot de passe !');
+    } else {
+        header('Location: index.php?action=editPassword');
+    }
+}
+
 function connexion($id, $password)
 {
 
     $getManager = new GetManager();
-    $req = $getManager->getConnexion($id, $password);
+    $req = $getManager->getConnexion($id);
 
     $resultat = $req->fetch();
 
@@ -27,7 +44,7 @@ function connexion($id, $password)
             $_SESSION['surname'] = $resultat['surname'];
             $_SESSION['name'] = $resultat['name'];
             $_SESSION['canValidate'] = $resultat['canValidate'];
-            $_SESSION['canPay'] = $resultat['canPay'];
+            $_SESSION['canPay'] = $resultat['canPay'];  
         } else {
             header('Location: index.php');
         }
