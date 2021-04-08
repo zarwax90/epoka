@@ -21,11 +21,9 @@
             <div class="mb-3">
                 <button type="submit" class="btn btn-primary">Connexion</button>
             </div>
+        <?php } ?>
         </form>
-        <div class="alert alert-danger" role="alert">
-            Vous n'êtes pas connecté !
-        </div>
-    <?php } ?>
+        <?php echo ($alert) ?>
 </div>
 <?php $content = ob_get_clean(); ?>
 <?php require('template.php'); ?>

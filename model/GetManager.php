@@ -78,6 +78,24 @@ class GetManager extends Manager
         return $req;
     }
 
+    // Récupération des distances
+    public function getOneDistance($idCity1, $idCity2)
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare("SELECT *
+        FROM distance d
+        WHERE idCity1 = :city1
+        AND idCity2 = :city2
+        OR idCity1 = :city2
+        AND idCity2 = :city1");
+        $req->execute(array(
+            'city1' => $idCity1,
+            'city2' => $idCity2
+        ));
+
+        return $req;
+    }
+
     // Récupération deu prix des trajets
     public function getPrice($id)
     {

@@ -1,4 +1,7 @@
 <?php
+//======================================================================
+// CONTROLLER
+//======================================================================
 require('navbar.php');
 require_once('model/GetManager.php');
 require_once('model/PostManager.php');
@@ -6,6 +9,15 @@ require_once('model/UpdateManager.php');
 
 function index()
 {
+    if (isset($_SESSION['errorConnexion'])) {
+        unset($_SESSION['errorConnexion']);
+        $alert = '<div class="alert alert-danger" role="alert">Identifiant ou mot de passe incorrect !</div>';
+    } else if (isset($_SESSION['id'])) {
+        $alert = NULL;
+    } else {
+        $alert = '<div class="alert alert-danger" role="alert">Vous n\'êtes pas connecté ! </div>';
+    }
+
     require('view/connectionView.php');
 }
 
@@ -31,33 +43,40 @@ function connexion($id, $password)
 
     $getManager = new GetManager();
     $req = $getManager->getConnexion($id);
-
     $resultat = $req->fetch();
 
-    // Comparaison du pass envoyé via le formulaire avec la base
-    $isPasswordCorrect = password_verify($password, $resultat['password']);
-
     if (!$resultat) {
+        $_SESSION['errorConnexion'] = true;
+        header('Location: index.php');
     } else {
+        // Comparaison du pass envoyé via le formulaire avec la base
+        $isPasswordCorrect = password_verify($password, $resultat['password']);
+
         if ($isPasswordCorrect) {
             $_SESSION['id'] = $resultat['id'];
             $_SESSION['surname'] = $resultat['surname'];
             $_SESSION['name'] = $resultat['name'];
             $_SESSION['canValidate'] = $resultat['canValidate'];
-            $_SESSION['canPay'] = $resultat['canPay'];  
+            $_SESSION['canPay'] = $resultat['canPay'];
+            // setcookie("id", $resultat['id'], time()+3600);
+            // setcookie("surname", $resultat['surname'], time()+3600);
+            // setcookie("name", $resultat['name'], time()+3600);
+        } else {
+            $_SESSION['errorConnexion'] = true;
+            header('Location: index.php');
+        }
+
+        if ($_SESSION['canPay'] == 1) {
+            header('Location: index.php?action=payment');
+        } else if ($_SESSION['canValidate'] == 1) {
+            header('Location: index.php?action=validation');
         } else {
             header('Location: index.php');
         }
     }
-    if ($_SESSION['canPay'] == 1) {
-        header('Location: index.php?action=payment');
-    } else if ($_SESSION['canValidate'] == 1) {
-        header('Location: index.php?action=validation');
-    } else {
-        header('Location: index.php');
-    }
 }
 
+// 
 function deconnexion()
 {
     $_SESSION = array();
@@ -90,8 +109,22 @@ function listSettings()
     $cities = $getManager->getCities();
     $distance = $getManager->getDistance();
 
+    if (isset($_SESSION['errorDistance'])) {
+        unset($_SESSION['errorDistance']);
+        $alert = '<div class="alert alert-danger my-3" role="alert">
+                    Distance déjà existante !
+                </div>';
+    } else if (isset($_SESSION['errorDistanceEqual'])) {
+        unset($_SESSION['errorDistanceEqual']);
+        $alert = '<div class="alert alert-danger my-3" role="alert">
+                    Impossible de saisir les mêmes villes !
+                </div>';
+    } else {
+        $alert = NULL;
+    }
     require('view/settingsView.php');
 }
+
 function distance($city1, $city2, $km)
 {
 
@@ -99,7 +132,11 @@ function distance($city1, $city2, $km)
     $affectedLines = $postManager->postDistance($city1, $city2, $km);
 
     if ($affectedLines === false) {
-        die('Impossible d\'ajouter la distance !');
+        $_SESSION['errorDistance'] = true;
+        header('Location: index.php?action=parametre');
+    } else if ($affectedLines != 1) {
+        $_SESSION['errorDistanceEqual'] = true;
+        header('Location: index.php?action=parametre');
     } else {
         header('Location: index.php?action=parametre');
     }
@@ -107,7 +144,6 @@ function distance($city1, $city2, $km)
 
 function settings($km, $ind)
 {
-
 
     $updateManager = new UpdateManager();
     $affectedLines = $updateManager->updateSettings($km, $ind);
