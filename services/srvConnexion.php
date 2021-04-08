@@ -1,4 +1,8 @@
 <?php
+//======================================================================
+// AUTHENTICATION SERVICE
+//======================================================================
+
 include 'connexionBdd.php';
 
 // récupération des variables du formulaire 

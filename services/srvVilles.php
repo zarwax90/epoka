@@ -1,4 +1,8 @@
 <?php
+//======================================================================
+// CITY SELECTION SERVICE
+//======================================================================
+
 include 'connexionBdd.php';
 
 $req = $db->prepare("SELECT * FROM cities WHERE cp LIKE '38%'");

@@ -1,5 +1,7 @@
 <?php
-
+//======================================================================
+// MANAGE THE CONNECTION TO THE DATABASE
+//======================================================================
 class Manager
 {
     // Fonction permettant la connection à la base de données
