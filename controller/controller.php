@@ -2,11 +2,17 @@
 //======================================================================
 // CONTROLLER
 //======================================================================
+
 require('navbar.php');
 require_once('model/GetManager.php');
 require_once('model/PostManager.php');
 require_once('model/UpdateManager.php');
 
+//----------------------------------------------------------------------
+// VUE
+//----------------------------------------------------------------------
+
+// index (Connexion)
 function index()
 {
     if (isset($_SESSION['errorConnexion'])) {
@@ -21,69 +27,13 @@ function index()
     require('view/connectionView.php');
 }
 
+// Edit password
 function password()
 {
     require('view/editPasswordView.php');
 }
 
-function newPassword($password, $id)
-{
-    $updateManager = new UpdateManager();
-    $affectedLines = $updateManager->updatePassword($password, $id);
-
-    if ($affectedLines === false) {
-        die('Impossible de modifier votre mot de passe !');
-    } else {
-        header('Location: index.php?action=editPassword');
-    }
-}
-
-function connexion($id, $password)
-{
-
-    $getManager = new GetManager();
-    $req = $getManager->getConnexion($id);
-    $resultat = $req->fetch();
-
-    if (!$resultat) {
-        $_SESSION['errorConnexion'] = true;
-        header('Location: index.php');
-    } else {
-        // Comparaison du pass envoyé via le formulaire avec la base
-        $isPasswordCorrect = password_verify($password, $resultat['password']);
-
-        if ($isPasswordCorrect) {
-            $_SESSION['id'] = $resultat['id'];
-            $_SESSION['surname'] = $resultat['surname'];
-            $_SESSION['name'] = $resultat['name'];
-            $_SESSION['canValidate'] = $resultat['canValidate'];
-            $_SESSION['canPay'] = $resultat['canPay'];
-            // setcookie("id", $resultat['id'], time()+3600);
-            // setcookie("surname", $resultat['surname'], time()+3600);
-            // setcookie("name", $resultat['name'], time()+3600);
-        } else {
-            $_SESSION['errorConnexion'] = true;
-            header('Location: index.php');
-        }
-
-        if ($_SESSION['canPay'] == 1) {
-            header('Location: index.php?action=payment');
-        } else if ($_SESSION['canValidate'] == 1) {
-            header('Location: index.php?action=validation');
-        } else {
-            header('Location: index.php');
-        }
-    }
-}
-
-// 
-function deconnexion()
-{
-    $_SESSION = array();
-    session_destroy();
-    header('Location: index.php');
-}
-
+// Validation 
 function listValidation()
 {
     $getManager = new GetManager();
@@ -92,6 +42,7 @@ function listValidation()
     require('view/validationView.php');
 }
 
+// Payment
 function listPayment()
 {
 
@@ -101,6 +52,7 @@ function listPayment()
     require('view/paymentView.php');
 }
 
+// Settings
 function listSettings()
 {
 
@@ -125,6 +77,65 @@ function listSettings()
     require('view/settingsView.php');
 }
 
+//----------------------------------------------------------------------
+// ACTION
+//----------------------------------------------------------------------
+
+// Edit password
+function newPassword($password, $id)
+{
+    $updateManager = new UpdateManager();
+    $affectedLines = $updateManager->updatePassword($password, $id);
+
+    if ($affectedLines === false) {
+        die('Impossible de modifier votre mot de passe !');
+    } else {
+        header('Location: index.php?action=editPassword');
+    }
+}
+
+// Connexion
+function connexion($id, $password)
+{
+
+    $getManager = new GetManager();
+    $req = $getManager->getConnexion($id);
+    $resultat = $req->fetch();
+
+    if (!$resultat) {
+        $_SESSION['errorConnexion'] = true;
+        header('Location: index.php');
+    } else {
+        // Comparaison du pass envoyé via le formulaire avec la base
+        $isPasswordCorrect = password_verify($password, $resultat['password']);
+
+        if ($isPasswordCorrect) {
+            $_SESSION['id'] = $resultat['id'];
+            $_SESSION['surname'] = $resultat['surname'];
+            $_SESSION['name'] = $resultat['name'];
+            $_SESSION['canValidate'] = $resultat['canValidate'];
+            $_SESSION['canPay'] = $resultat['canPay'];
+            // setcookie("id", $resultat['id'], time() + 3600);
+            // setcookie("surname", $resultat['surname'], time() + 3600);
+            // setcookie("name", $resultat['name'], time() + 3600);
+            // setcookie("canValidate", $resultat['canValidate'], time() + 3600);
+            // setcookie("canPay", $resultat['canPay'], time() + 3600);
+        } else {
+            $_SESSION['errorConnexion'] = true;
+            header('Location: index.php');
+        }
+
+        if ($_SESSION['canPay'] == 1) {
+            header('Location: index.php?action=payment');
+        } else if ($_SESSION['canValidate'] == 1) {
+            header('Location: index.php?action=validation');
+        } else {
+            header('Location: index.php');
+        }
+    }
+}
+
+// Adding a distance
 function distance($city1, $city2, $km)
 {
 
@@ -142,6 +153,7 @@ function distance($city1, $city2, $km)
     }
 }
 
+// Parameter modification
 function settings($km, $ind)
 {
 
@@ -155,6 +167,7 @@ function settings($km, $ind)
     }
 }
 
+// Settings modification
 function validation($id)
 {
 
@@ -169,6 +182,7 @@ function validation($id)
     }
 }
 
+// Update payment 
 function payment($id, $price)
 {
 
@@ -180,4 +194,12 @@ function payment($id, $price)
     } else {
         header('Location: index.php?action=payment');
     }
+}
+
+// Deconnexion
+function deconnexion()
+{
+    $_SESSION = array();
+    session_destroy();
+    header('Location: index.php');
 }
