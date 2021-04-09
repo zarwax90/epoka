@@ -6,7 +6,7 @@ require_once("Manager.php");
 
 class GetManager extends Manager
 {
-    // Récupération des validations
+    // Recovery validations
     public function getValidation()
     {
         $db = $this->dbConnect();
@@ -21,7 +21,7 @@ class GetManager extends Manager
         return $req;
     }
 
-    // Récupération des Payements
+    // Recovery Payements
     public function getPayment()
     {
         $db = $this->dbConnect();
@@ -35,7 +35,7 @@ class GetManager extends Manager
         return $req;
     }
 
-    // Récupération des paramètres
+    // Recovery settings
     public function getSettings()
     {
         $db = $this->dbConnect();
@@ -45,7 +45,7 @@ class GetManager extends Manager
         return $req;
     }
 
-    // Récupération des villes
+    // Recovery cities
     public function getCities()
     {
         $db = $this->dbConnect();
@@ -55,7 +55,7 @@ class GetManager extends Manager
         return $req;
     }
 
-    // Connexion
+    // Connection
     public function getConnexion($id)
     {
         $db = $this->dbConnect();
@@ -67,7 +67,7 @@ class GetManager extends Manager
         return $req;
     }
 
-    // Récupération des distances
+    // Recovery distances
     public function getDistance()
     {
         $db = $this->dbConnect();
@@ -80,7 +80,7 @@ class GetManager extends Manager
         return $req;
     }
 
-    // Récupération des distances
+    // Recovery one distance
     public function getOneDistance($idCity1, $idCity2)
     {
         $db = $this->dbConnect();
@@ -98,12 +98,12 @@ class GetManager extends Manager
         return $req;
     }
 
-    // Récupération deu prix des trajets
+    // Recovery of distance prices
     public function getPrice($id)
     {
         $db = $this->dbConnect();
 
-        // récupération du nombre de km d'une mission
+        // Recovery the number of km of a mission
         $req = $db->prepare("SELECT d.Km
         FROM distance AS d
         WHERE d.idCity1 = (SELECT m.idDest FROM missions AS m WHERE m.id = :id) 
@@ -114,7 +114,7 @@ class GetManager extends Manager
             'id' => $id
         ));
 
-        // nombre de jours
+        // Number of days
         $req2 = $db->prepare("SELECT DATEDIFF(end,start) AS duree
             FROM missions 
             WHERE id = :id");
@@ -137,11 +137,11 @@ class GetManager extends Manager
         return $price;
     }
 
+    // Recovery a prize
     public function getPriceMission($id)
     {
         $db = $this->dbConnect();
 
-        // nombre de jours
         $req = $db->prepare("SELECT priceMission
                 FROM missions 
                 WHERE id = :id");

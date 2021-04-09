@@ -7,7 +7,7 @@ require_once("Manager.php");
 
 class UpdateManager extends Manager
 {
-    // Modification d'une validation
+    // Editing a validation
     public function updateValidation($id)
     {
         $db = $this->dbConnect();
@@ -20,7 +20,7 @@ class UpdateManager extends Manager
         return $statutValidation;
     }
 
-    // Modification d'une validation
+    // Editing a payment
     public function updatePayment($id, $price)
     {
         $db = $this->dbConnect();
@@ -34,7 +34,7 @@ class UpdateManager extends Manager
         return $statutPayment;
     }
 
-    // Modification des paramètres
+    // Settings modification
     public function updateSettings($km, $ind)
     {
         $db = $this->dbConnect();
@@ -47,7 +47,7 @@ class UpdateManager extends Manager
         return $affectedLines;
     }
 
-    // Modification du mot de passe
+    // Edit password
     public function updatePassword($password, $id)
     {
         $db = $this->dbConnect();

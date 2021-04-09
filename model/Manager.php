@@ -4,7 +4,7 @@
 //======================================================================
 class Manager
 {
-    // Fonction permettant la connection à la base de données
+    // Connection to the database
     public function dbConnect()
     {
         try {

@@ -8,7 +8,7 @@ require_once("GetManager.php");
 
 class PostManager extends Manager
 {
-    // Ajout d'une distance
+    // Add distance
     public function postDistance($city1, $city2, $km)
     {
         $db = $this->dbConnect();
