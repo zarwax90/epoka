@@ -14,6 +14,14 @@ if (isset($_GET['action'])) {
             header('Location: index.php?action=validation');
         }
 
+        // Cancel validation
+    } else if ($_GET['action'] == 'cancelValidation' and isset($_SESSION['id']) and $_SESSION['canValidate'] == 1) {
+        if (!empty($_POST['cancel'])) {
+            validationCanceled($_POST['cancel']);
+        } else {
+            header('Location: index.php?action=validation');
+        }
+
         // Payment
     } else if ($_GET['action'] == 'payment' and isset($_SESSION['id']) and $_SESSION['canPay'] == 1) {
         listPayment();
@@ -22,6 +30,14 @@ if (isset($_GET['action'])) {
     } else if ($_GET['action'] == 'updatePayment' and isset($_SESSION['id']) and $_SESSION['canPay'] == 1) {
         if (!empty($_POST['valide']) && !empty($_POST['price'])) {
             payment($_POST['valide'], $_POST['price']);
+        } else {
+            header('Location: index.php?action=payment');
+        }
+
+        // Cancel payment
+    } else if ($_GET['action'] == 'cancelPayment' and isset($_SESSION['id']) and $_SESSION['canPay'] == 1) {
+        if (!empty($_POST['cancel'])) {
+            paymentCanceled($_POST['cancel']);
         } else {
             header('Location: index.php?action=payment');
         }

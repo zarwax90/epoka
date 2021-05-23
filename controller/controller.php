@@ -190,7 +190,7 @@ function settings($km, $ind)
     }
 }
 
-// Settings modification
+// Update validation
 function validation($id)
 {
 
@@ -205,12 +205,38 @@ function validation($id)
     }
 }
 
+// Cancel validation
+function validationCanceled($id)
+{
+    $updateManager = new UpdateManager();
+    $statutValidation = $updateManager->cancelValidation($id);
+
+    if ($statutValidation === false) {
+        die('Impossible de valider !');
+    } else {
+        header('Location: index.php?action=validation');
+    }
+}
+
 // Update payment 
 function payment($id, $price)
 {
 
     $updateManager = new UpdateManager();
     $statutPayment = $updateManager->updatePayment($id, $price);
+
+    if ($statutPayment === false) {
+        die('Impossible de valider !');
+    } else {
+        header('Location: index.php?action=payment');
+    }
+}
+
+// Cancel paayment
+function paymentCanceled($id)
+{
+    $updateManager = new UpdateManager();
+    $statutPayment = $updateManager->cancelPayment($id);
 
     if ($statutPayment === false) {
         die('Impossible de valider !');

@@ -76,4 +76,31 @@ class UpdateManager extends Manager
             }
         }
     }
+
+    // Cancel validation
+    public function cancelValidation($id)
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare("UPDATE missions SET validated = :validate WHERE id = :id");
+        $statutValidation = $req->execute(array(
+            'validate' => 0,
+            'id' => $id
+        ));
+
+        return $statutValidation;
+    }
+
+    // Cancel payment
+    public function cancelPayment($id)
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare("UPDATE missions SET payed = :pay, priceMission = :price WHERE id = :id");
+        $statutPayment = $req->execute(array(
+            'pay' => 0,
+            'id' => $id,
+            'price' => NULL
+        ));
+
+        return $statutPayment;
+    }
 }

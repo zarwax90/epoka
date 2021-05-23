@@ -43,10 +43,13 @@
                                     <input type="hidden" name="price" value="<?= htmlspecialchars($price) ?>">
                                     <button type="submit" class="btn btn-success btn-sm" name="valide" value="<?php echo $data['id'] ?>">Rembourser</button>
                                 </form>
-                        <?php
-                            } else if ($data['payed'] == 1) {
-                                echo 'Remboursée';
-                            }
+                            <?php
+                            } else if ($data['payed'] == 1) { ?>
+                                <form action="index.php?action=cancelPayment" method="POST">
+                                    Remboursée
+                                    <button type="submit" class="btn btn-danger btn-sm" name="cancel" value="<?php echo $data['id'] ?>">Annuler</button>
+                                </form>
+                        <?php }
                         }  ?>
                     </td>
                 </tr>
