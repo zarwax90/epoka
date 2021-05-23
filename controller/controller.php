@@ -30,6 +30,24 @@ function index()
 // Edit password
 function password()
 {
+    if (isset($_SESSION['errorPassword'])) {
+        unset($_SESSION['errorPassword']);
+        $alert = '<div class="alert alert-danger my-3" role="alert">
+                    Les mots de passe ne sont pas pareils !
+                </div>';
+    } else if (isset($_SESSION['errorNewPassword'])) {
+        unset($_SESSION['errorNewPassword']);
+        $alert = '<div class="alert alert-danger my-3" role="alert">
+                    Mauvais mot de passe !
+                </div>';
+    } else if (isset($_SESSION['newPassword'])) {
+        unset($_SESSION['newPassword']);
+        $alert = '<div class="alert alert-warning my-3" role="alert">
+                    Mot de passe modifié !
+                </div>';
+    } else {
+        $alert = NULL;
+    }
     require('view/editPasswordView.php');
 }
 
@@ -82,14 +100,19 @@ function listSettings()
 //----------------------------------------------------------------------
 
 // Edit password
-function newPassword($password, $id)
+function newPassword($password, $newPassword, $newPassword2, $id)
 {
     $updateManager = new UpdateManager();
-    $affectedLines = $updateManager->updatePassword($password, $id);
+    $affectedLines = $updateManager->updatePassword($password, $newPassword, $newPassword2, $id);
 
     if ($affectedLines === false) {
-        die('Impossible de modifier votre mot de passe !');
+        $_SESSION['errorPassword'] = true;
+        header('Location: index.php?action=editPassword');
+    } else if ($affectedLines != 1) {
+        $_SESSION['errorNewPassword'] = true;
+        header('Location: index.php?action=editPassword');
     } else {
+        $_SESSION['newPassword'] = true;
         header('Location: index.php?action=editPassword');
     }
 }

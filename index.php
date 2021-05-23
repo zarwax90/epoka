@@ -50,12 +50,12 @@ if (isset($_GET['action'])) {
     } else if ($_GET['action'] == 'editPassword' and isset($_SESSION['id'])) {
         password();
 
-      // Modification du mot de passe
+        // Modification du mot de passe
     } else if ($_GET['action'] == 'updatePassword' and isset($_SESSION['id'])) {
         if (!empty($_POST['password'] && $_SESSION['id'])) {
-            newPassword($_POST['password'], $_SESSION['id']);
+            newPassword($_POST['password'], $_POST['newPassword'], $_POST['newPassword2'], $_SESSION['id']);
         } else {
-            header('Location: index.php?action=parametre');
+            header('Location: index.php?action=editPassword');
         }
         // Déconnexion
     } else if ($_GET['action'] == 'deconnexion') {

@@ -48,16 +48,32 @@ class UpdateManager extends Manager
     }
 
     // Edit password
-    public function updatePassword($password, $id)
+    public function updatePassword($password, $newPassword, $newPassword2, $id)
     {
-        $db = $this->dbConnect();
-        $password = password_hash($password, PASSWORD_DEFAULT);
-        $req = $db->prepare('UPDATE user SET password = :password WHERE id = :id');
-        $affectedLines = $req->execute(array(
-            'password' => $password,
-            'id' => $id
-        ));
+        $getManager = new GetManager();
+        $req = $getManager->getInfoUser();
+        $resultat = $req->fetch();
+        $isPasswordCorrect = password_verify($password, $resultat['password']);
 
-        return $affectedLines;
+        if ($newPassword != $newPassword2) {
+            $affectedLines = false;
+            return $affectedLines;
+        } else {
+            if (!$resultat) {
+                $affectedLines = "erreur";
+                return $affectedLines;
+            } else {
+                if ($isPasswordCorrect) {
+                    $db = $this->dbConnect();
+                    $password = password_hash($newPassword, PASSWORD_DEFAULT);
+                    $req = $db->prepare('UPDATE user SET password = :password WHERE id = :id');
+                    $affectedLines = $req->execute(array(
+                        'password' => $password,
+                        'id' => $id
+                    ));
+                    return $affectedLines;
+                }
+            }
+        }
     }
 }

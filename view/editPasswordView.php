@@ -19,6 +19,7 @@
         </div>
         <button type="submit" class="btn btn-primary my-3">Modifier</button>
     </form>
+    <?php echo ($alert) ?>
 </div>
 
 <?php $content = ob_get_clean(); ?>

@@ -156,4 +156,16 @@ class GetManager extends Manager
             return $price;
         }
     }
+
+    public function getInfoUser()
+    {
+        $db = $this->dbConnect();
+        //  Récupération de l'utilisateur et de son pass hashé
+        $req = $db->prepare("SELECT * FROM user WHERE id = :id");
+        $req->execute(array(
+            'id' => $_SESSION['id']
+        ));
+        
+        return $req;
+    }
 }
