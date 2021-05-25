@@ -56,7 +56,11 @@ if (isset($_GET['action'])) {
 
         // Settings
     } else if ($_GET['action'] == 'settings' and isset($_SESSION['id']) and $_SESSION['canPay'] == 1) {
-        listSettings();
+        if (isset($_GET['idUser'])) {
+            listSettings($_GET['idUser']);
+        } else {
+            listSettings(NULL);
+        }
 
         // Update settings
     } else if ($_GET['action'] == 'updateSettings' and isset($_SESSION['id']) and $_SESSION['canPay'] == 1) {

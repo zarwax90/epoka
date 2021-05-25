@@ -4,6 +4,7 @@
 <?php $datas = $cities->fetchAll(); ?>
 <?php $datas2 = $distance->fetchAll(); ?>
 <?php $datas3 = $settings->fetch(); ?>
+<?php if (isset($_GET['idVille'])){ $datas4 = $distanceMission->fetch(); } ?>
 <div class="container my-3">
     <h1>Paramétrage de l'application</h1>
     <div class="border border-primary border-2 rounded">
@@ -46,16 +47,16 @@
             <h2>Distance entre les villes</h2>
             <div class="input-group mb-3">
                 <span class="input-group-text">De :</span>
-                <input type="hidden" id="text1" name="text1" required>
-                <input class="form-control" list="city1" id="ville1" placeholder="Choisir une ville..." required>
+                <input type="hidden" id="text1" name="text1" value="<?php if (isset($datas4['id'])){ echo $datas4['id']; } ?>" required>
+                <input class="form-control" list="city1" id="ville1" placeholder="Choisir une ville..." value="<?php if (isset($datas4['city_name'])){ echo $datas4['city_name']; } ?>" required>
                 <datalist id="city1">
                     <?php foreach ($datas as $data) {
                         echo ('<option id="' . $data['id'] . '" value="' . $data['city_name'] . '"> (' . $data['cp'] . ')');
                     } ?>
                 </datalist>
                 <span class="input-group-text">À :</span>
-                <input type="hidden" id="text2" name="text2" required>
-                <input class="form-control" list="city2" id="ville2" placeholder="Choisir une ville..." required>
+                <input type="hidden" id="text2" name="text2" value="<?php if (isset($_GET['idVille'])){ echo $_GET['idVille']; } ?>" required>
+                <input class="form-control" list="city2" id="ville2" placeholder="Choisir une ville..." value="<?php if (isset($_GET['idVille'])){ echo $_GET['ville']; } ?>" required>
                 <datalist id="city2">
                     <?php foreach ($datas as $data) {
                         echo ('<option id="' . $data['id'] . '" value="' . $data['city_name'] . '"> (' . $data['cp'] . ')');

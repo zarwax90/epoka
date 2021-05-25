@@ -25,7 +25,7 @@ class GetManager extends Manager
     public function getPayment()
     {
         $db = $this->dbConnect();
-        $req = $db->prepare("SELECT user.surname, user.name, cities.cp, cities.city_name, missions.id, missions.start, missions.end, missions.validated, missions.payed
+        $req = $db->prepare("SELECT user.id AS idUser, user.surname, user.name, cities.id AS idVille, cities.cp, cities.city_name, missions.id, missions.start, missions.end, missions.validated, missions.payed
         FROM missions, user, cities 
         WHERE missions.idDest = cities.id
         AND missions.idUser = user.id
@@ -98,6 +98,22 @@ class GetManager extends Manager
         return $req;
     }
 
+    // Retrieving a user's agency city
+    public function getUserAgencyCity($idUser)
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare("SELECT cities.id, cities.city_name
+        FROM cities,agency,user
+        WHERE user.idAgency = agency.id
+        AND agency.idCity = cities.id
+        AND user.id = :id");
+        $req->execute(array(
+            'id' => $idUser
+        ));
+
+        return $req;
+    }
+
     // Recovery of distance prices
     public function getPrice($id)
     {
@@ -165,7 +181,7 @@ class GetManager extends Manager
         $req->execute(array(
             'id' => $_SESSION['id']
         ));
-        
+
         return $req;
     }
 }

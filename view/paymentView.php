@@ -33,7 +33,7 @@
                     <td><?= htmlspecialchars($data['city_name'] . " (" . $data['cp'] . ")") ?></td>
                     <td>
                         <?php if ($price == 'Distance non défini') { ?>
-                            <a href="index.php?action=settings"><?= htmlspecialchars($price) ?></a>
+                            <a href="index.php?action=settings&idUser=<?= htmlspecialchars($data['idUser']) ?>&idVille=<?= htmlspecialchars($data['idVille']) ?>&ville=<?= htmlspecialchars($data['city_name']) ?>"><?= htmlspecialchars($price) ?></a>
                         <?php } else { ?> <?= htmlspecialchars($price) ?> <?php } ?>
                     </td>
                     <td>

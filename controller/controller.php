@@ -71,7 +71,7 @@ function listPayment()
 }
 
 // Settings
-function listSettings()
+function listSettings($idUser)
 {
 
     $getManager = new GetManager();
