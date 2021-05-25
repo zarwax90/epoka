@@ -167,12 +167,12 @@ function distance($city1, $city2, $km)
 
     if ($affectedLines === false) {
         $_SESSION['errorDistance'] = true;
-        header('Location: index.php?action=parametre');
+        header('Location: index.php?action=settings');
     } else if ($affectedLines != 1) {
         $_SESSION['errorDistanceEqual'] = true;
-        header('Location: index.php?action=parametre');
+        header('Location: index.php?action=settings');
     } else {
-        header('Location: index.php?action=parametre');
+        header('Location: index.php?action=settings');
     }
 }
 
@@ -186,7 +186,7 @@ function settings($km, $ind)
     if ($affectedLines === false) {
         die('Impossible de mettre à jour les paramètres !');
     } else {
-        header('Location: index.php?action=parametre');
+        header('Location: index.php?action=settings');
     }
 }
 

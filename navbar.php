@@ -38,7 +38,7 @@ session_start();
                                 <a class="nav-link" href="index.php?action=payment">Paiement des frais</a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="index.php?action=parametre">Paramétrage</a>
+                                <a class="nav-link" href="index.php?action=settings">Paramétrage</a>
                             </li>
                         <?php } ?>
                     <?php } ?>

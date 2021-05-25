@@ -2,11 +2,15 @@
 require('controller/controller.php');
 
 if (isset($_GET['action'])) {
+    //======================================================================
+    // VALIDATION
+    //======================================================================
+
     // Validation
     if ($_GET['action'] == 'validation' and isset($_SESSION['id']) and $_SESSION['canValidate'] == 1) {
         listValidation();
 
-        // MAJ validation
+        // Update validation
     } else if ($_GET['action'] == 'updateValidation' and isset($_SESSION['id']) and $_SESSION['canValidate'] == 1) {
         if (!empty($_POST['valide'])) {
             validation($_POST['valide']);
@@ -22,11 +26,15 @@ if (isset($_GET['action'])) {
             header('Location: index.php?action=validation');
         }
 
+        //======================================================================
+        // PAYMENT
+        //======================================================================
+
         // Payment
     } else if ($_GET['action'] == 'payment' and isset($_SESSION['id']) and $_SESSION['canPay'] == 1) {
         listPayment();
 
-        // MAJ payment
+        // Update payment
     } else if ($_GET['action'] == 'updatePayment' and isset($_SESSION['id']) and $_SESSION['canPay'] == 1) {
         if (!empty($_POST['valide']) && !empty($_POST['price'])) {
             payment($_POST['valide'], $_POST['price']);
@@ -42,16 +50,20 @@ if (isset($_GET['action'])) {
             header('Location: index.php?action=payment');
         }
 
-        // Parametre
-    } else if ($_GET['action'] == 'parametre' and isset($_SESSION['id']) and $_SESSION['canPay'] == 1) {
+        //======================================================================
+        // SETTINGS
+        //======================================================================
+
+        // Settings
+    } else if ($_GET['action'] == 'settings' and isset($_SESSION['id']) and $_SESSION['canPay'] == 1) {
         listSettings();
 
-        // MAJ parametre
+        // Update settings
     } else if ($_GET['action'] == 'updateSettings' and isset($_SESSION['id']) and $_SESSION['canPay'] == 1) {
         if (!empty($_POST['inputKm']) && !empty($_POST['inputInd'])) {
             settings($_POST['inputKm'], $_POST['inputInd']);
         } else {
-            header('Location: index.php?action=parametre');
+            header('Location: index.php?action=settings');
         }
 
         // Distance
@@ -59,10 +71,13 @@ if (isset($_GET['action'])) {
         if (!empty($_POST['text1']) && !empty($_POST['text2']) && !empty($_POST['km'])) {
             distance($_POST['text1'], $_POST['text2'], $_POST['km']);
         } else {
-            header('Location: index.php?action=parametre');
+            header('Location: index.php?action=settings');
         }
+        //======================================================================
+        // PASSWORD CHANGE
+        //======================================================================
 
-        // Formulaire pour modification mot de passe
+        // Password modification form
     } else if ($_GET['action'] == 'editPassword' and isset($_SESSION['id'])) {
         password();
 
@@ -73,11 +88,16 @@ if (isset($_GET['action'])) {
         } else {
             header('Location: index.php?action=editPassword');
         }
-        // Déconnexion
+
+        //======================================================================
+        // LOG IN
+        //======================================================================
+
+        // Logout
     } else if ($_GET['action'] == 'deconnexion') {
         deconnexion();
 
-        // Connexion
+        // Log in
     } else if ($_GET['action'] == 'connexion') {
         if (!empty($_POST['id']) && !empty($_POST['password'])) {
             connexion($_POST['id'], $_POST['password']);

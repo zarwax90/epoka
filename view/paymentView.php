@@ -32,7 +32,9 @@
                     <td><?= htmlspecialchars($end) ?></td>
                     <td><?= htmlspecialchars($data['city_name'] . " (" . $data['cp'] . ")") ?></td>
                     <td>
-                        <?= htmlspecialchars($price) ?>
+                        <?php if ($price == 'Distance non défini') { ?>
+                            <a href="index.php?action=settings"><?= htmlspecialchars($price) ?></a>
+                        <?php } else { ?> <?= htmlspecialchars($price) ?> <?php } ?>
                     </td>
                     <td>
                         <?php if ($data['validated'] == 0) {
@@ -45,10 +47,11 @@
                                 </form>
                             <?php
                             } else if ($data['payed'] == 1) { ?>
-                                <form action="index.php?action=cancelPayment" method="POST">
+                                Remboursée
+                                <!-- <form action="index.php?action=cancelPayment" method="POST" onsubmit="if(confirm('Veuillez confirmer cette action d\'annulation')){return true;}else{return false;}">
                                     Remboursée
                                     <button type="submit" class="btn btn-danger btn-sm" name="cancel" value="<?php echo $data['id'] ?>">Annuler</button>
-                                </form>
+                                </form> -->
                         <?php }
                         }  ?>
                     </td>
