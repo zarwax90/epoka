@@ -78,6 +78,9 @@ function listSettings($idUser)
     $settings = $getManager->getSettings();
     $cities = $getManager->getCities();
     $distance = $getManager->getDistance();
+    if ($idUser != NULL) {
+        $distanceMission = $getManager->getUserAgencyCity($idUser);
+    }
 
     if (isset($_SESSION['errorDistance'])) {
         unset($_SESSION['errorDistance']);
