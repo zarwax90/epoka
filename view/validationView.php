@@ -11,7 +11,8 @@
                 <th scope="col">Début de la mission</th>
                 <th scope="col">Fin de la mission</th>
                 <th scope="col">Lieu de la mission</th>
-                <th scope="col">Validation</th>
+                <th scope="col">Statut</th>
+                <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -28,24 +29,29 @@
                     <td><?= htmlspecialchars($start) ?></td>
                     <td><?= htmlspecialchars($end) ?></td>
                     <td><?= htmlspecialchars($data['city_name'] . " (" . $data['cp'] . ")") ?></td>
-                    <td>
-                        <?php if ($data['validated'] == 0) {  ?>
+
+                    <?php if ($data['validated'] == 0) {  ?>
+                        <td>En attente</td>
+                        <td>
                             <form action="index.php?action=updateValidation" method="POST">
                                 <button type="submit" class="btn btn-success btn-sm" name="valide" value="<?php echo $data['id'] ?>">Valider</button>
                             </form>
-                            <?php } else if ($data['validated'] == 1) {
-                            if ($data['payed'] == 0) { ?>
-                                Validée
-                                <!-- <form action="index.php?action=cancelValidation" method="POST" onsubmit="if(confirm('Veuillez confirmer cette action d\'annulation')){return true;}else{return false;}">
-                                    Validée
+                        </td>
+                        <?php } else if ($data['validated'] == 1) {
+                        if ($data['payed'] == 0) { ?>
+                            <td>Validée</td>
+                            <td>
+                                <form action="index.php?action=cancelValidation" method="POST" onsubmit="if(confirm('Veuillez confirmer cette action d\'annulation')){return true;}else{return false;}">
                                     <button type="submit" class="btn btn-danger btn-sm" name="cancel" value="<?php echo $data['id'] ?>">Annuler</button>
-                                </form> -->
-                        <?php
-                            } else if ($data['payed'] == 1) {
-                                echo 'Validée, Remboursée';
-                            }
-                        }  ?>
-                    </td>
+                                </form>
+                            </td>
+                        <?php } else if ($data['payed'] == 1) { ?>
+                            <td>Validée, Remboursée</td>
+                            <td></td>
+                    <?php }
+                    }  ?>
+
+                    <td></td>
                 </tr>
             <?php } ?>
         </tbody>

@@ -12,7 +12,8 @@
                 <th scope="col">Fin de la mission</th>
                 <th scope="col">Lieu de la mission</th>
                 <th scope="col">Montant</th>
-                <th scope="col">Paiement</th>
+                <th scope="col">Statut</th>
+                <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -32,29 +33,35 @@
                     <td><?= htmlspecialchars($end) ?></td>
                     <td><?= htmlspecialchars($data['city_name'] . " (" . $data['cp'] . ")") ?></td>
                     <td>
-                        <?php if ($price == 'Distance non défini') { ?>
-                            <a href="index.php?action=settings&idUser=<?= htmlspecialchars($data['idUser']) ?>&idVille=<?= htmlspecialchars($data['idVille']) ?>&ville=<?= htmlspecialchars($data['city_name']) ?>"><?= htmlspecialchars($price) ?></a>
-                        <?php } else { ?> <?= htmlspecialchars($price) ?> <?php } ?>
+                        <?php if ($price != 'Distance non défini') { ?>
+                            <?= htmlspecialchars($price) ?> <?php } ?>
                     </td>
-                    <td>
-                        <?php if ($data['validated'] == 0) {
-                        } else if ($data['validated'] == 1) {
-                            if ($data['payed'] == 0 and $price != 'Distance non défini') {
-                        ?>
+                    <?php if ($data['validated'] == 0) {
+                    } else if ($data['validated'] == 1) {
+                        if ($data['payed'] == 0 and $price != 'Distance non défini') { ?>
+                            <td>En attente</td>
+                            <td>
                                 <form action="index.php?action=updatePayment" method="POST">
                                     <input type="hidden" name="price" value="<?= htmlspecialchars($price) ?>">
                                     <button type="submit" class="btn btn-success btn-sm" name="valide" value="<?php echo $data['id'] ?>">Rembourser</button>
                                 </form>
-                            <?php
-                            } else if ($data['payed'] == 1) { ?>
-                                Remboursée
-                                <!-- <form action="index.php?action=cancelPayment" method="POST" onsubmit="if(confirm('Veuillez confirmer cette action d\'annulation')){return true;}else{return false;}">
-                                    Remboursée
+                            </td>
+                        <?php } else if ($data['payed'] == 1) { ?>
+                            <td>Remboursée</td>
+                            <td>
+                                <form action="index.php?action=cancelPayment" method="POST" onsubmit="if(confirm('Veuillez confirmer cette action d\'annulation')){return true;}else{return false;}">
                                     <button type="submit" class="btn btn-danger btn-sm" name="cancel" value="<?php echo $data['id'] ?>">Annuler</button>
-                                </form> -->
-                        <?php }
-                        }  ?>
-                    </td>
+                                </form>
+                            </td>
+                        <?php } else { ?>
+                            <td>
+                                <?php if ($price == 'Distance non défini') { ?>
+                                    <a href="index.php?action=settings&idUser=<?= htmlspecialchars($data['idUser']) ?>&idVille=<?= htmlspecialchars($data['idVille']) ?>&ville=<?= htmlspecialchars($data['city_name']) ?>"><?= htmlspecialchars($price) ?></a>
+                                <?php } ?>
+                            </td>
+                            <td></td>
+                    <?php }
+                    }  ?>
                 </tr>
             <?php } ?>
         </tbody>
