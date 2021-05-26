@@ -20,8 +20,8 @@
             <?php
             setlocale(LC_TIME, "fr_FR", "French");
             while ($data = $pay->fetch()) {
-                $start = strftime("%A %d %B %G", strtotime($data['start']));
-                $end = strftime("%A %d %B %G", strtotime($data['end']));
+                $start = utf8_encode(strftime("%A %d %B %G", strtotime($data['start'])));
+                $end = utf8_encode(strftime("%A %d %B %G", strtotime($data['end'])));
 
                 $getManager = new GetManager();
                 $price = $getManager->getPriceMission($data['id']);
