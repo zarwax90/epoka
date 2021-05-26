@@ -1,12 +1,12 @@
 <?php
-include '../php/connexionBdd.php';
+include '../services/connexionBdd.php';
 
 // récupération des variables du formulaire 
 $nom = $_POST['nom'];
 $ville = $_POST['ville'];
 
 try {
-    $req = $bdd->prepare("INSERT INTO agence (nom, idVille) VALUES (:nom, :ville)");
+    $req = $db->prepare("INSERT INTO agency (name, idCity) VALUES (:nom, :ville)");
     $req->execute(array(
         'nom' => $nom,
         'ville' => $ville

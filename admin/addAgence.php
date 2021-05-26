@@ -1,5 +1,5 @@
 <?php
-include '../php/connexionBdd.php';
+include '../services/connexionBdd.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -26,14 +26,14 @@ include '../php/connexionBdd.php';
                     <select id="inputState" name="ville" class="form-control">
                         <?php
                         try {
-                            $req = $bdd->prepare("SELECT * FROM ville");
+                            $req = $db->prepare("SELECT * FROM cities");
                             $req->execute();
                         } catch (exception $e) {
                             die("Erreur de type " . $e->getMessage());
                         }
                         while ($donnees = $req->fetch()) {
                         ?>
-                            <option value="<?php echo $donnees['id'] ?>"> <?php echo "(" . $donnees['cp'] . ") " .  utf8_encode ($donnees['vil_nom']) ; ?></option>
+                            <option value="<?php echo $donnees['id'] ?>"> <?php echo "(" . $donnees['cp'] . ") " .  $donnees['city_name']; ?></option>
                         <?php
                         }
                         ?>

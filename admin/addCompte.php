@@ -1,5 +1,5 @@
 <?php
-include '../php/connexionBdd.php';
+include '../services/connexionBdd.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -62,37 +62,37 @@ include '../php/connexionBdd.php';
                     <select id="inputState" name="agence" class="form-control">
                         <?php
                         try {
-                            $req = $bdd->prepare("SELECT * FROM agence");
+                            $req = $db->prepare("SELECT * FROM agency");
                             $req->execute();
                         } catch (exception $e) {
                             die("Erreur de type " . $e->getMessage());
                         }
                         while ($donnees = $req->fetch()) {
                         ?>
-                            <option value="<?php echo $donnees['id'] ?>"> <?php echo $donnees['nom']; ?></option>
+                            <option value="<?php echo $donnees['id'] ?>"> <?php echo $donnees['name']; ?></option>
                         <?php
                         }
                         ?>
                     </select>
                 </div>
-                <!-- <div class="form-group col-md-4">
+                <div class="form-group col-md-4">
                     <label for="inputState">Responsable</label>
-                    <select id="inputState" name="id" class="form-control">
+                    <select id="inputState" name="resp" class="form-control">
                             <?php
                             try {
-                                $req = $bdd->prepare("SELECT * FROM user");
+                                $req = $db->prepare("SELECT * FROM user");
                                 $req->execute();
                             } catch (exception $e) {
                                 die("Erreur de type " . $e->getMessage());
                             }
                             while ($donnees = $req->fetch()) {
                             ?>
-                                <option value="<?php echo $donnees['id'] ?>"> <?php echo $donnees['nom'] . " " . $donnees['prenom']; ?></option>
+                                <option value="<?php echo $donnees['id'] ?>"> <?php echo $donnees['name'] . " " . $donnees['surname']; ?></option>
                             <?php
                             }
                             ?>
                     </select>
-                </div> -->
+                </div>
             </div>
             <button type="submit" class="btn btn-primary">Ajouter</button>
         </form>
