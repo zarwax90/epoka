@@ -49,15 +49,16 @@
                         <?php } else if ($data['payed'] == 1) { ?>
                             <td>Remboursée</td>
                             <td>
-                                <form action="index.php?action=cancelPayment" method="POST" onsubmit="if(confirm('Veuillez confirmer cette action d\'annulation')){return true;}else{return false;}">
+                                <!-- <form action="index.php?action=cancelPayment" method="POST" onsubmit="if(confirm('Veuillez confirmer cette action d\'annulation')){return true;}else{return false;}">
                                     <button type="submit" class="btn btn-danger btn-sm" name="cancel" value="<?php echo $data['id'] ?>">Annuler</button>
-                                </form>
+                                </form> -->
                             </td>
                         <?php } else { ?>
                             <td>
-                                <?php if ($price == 'Distance non défini') { ?>
+                                <!-- <?php if ($price == 'Distance non défini') { ?>
                                     <a href="index.php?action=settings&idUser=<?= htmlspecialchars($data['idUser']) ?>&idVille=<?= htmlspecialchars($data['idVille']) ?>&ville=<?= htmlspecialchars($data['city_name']) ?>"><?= htmlspecialchars($price) ?></a>
-                                <?php } ?>
+                                <?php } ?> -->
+                                <?= htmlspecialchars($price) ?>
                             </td>
                             <td></td>
                     <?php }

@@ -17,11 +17,10 @@
         </thead>
         <tbody>
             <?php
-
             setlocale(LC_TIME, "fr_FR", "French");
             while ($data = $valide->fetch()) {
-                $start = strftime("%A %d %B %G", strtotime($data['start']));
-                $end = strftime("%A %d %B %G", strtotime($data['end']));
+                $start = utf8_encode(strftime("%A %d %B %G", strtotime($data['start'])));
+                $end = utf8_encode(strftime("%A %d %B %G", strtotime($data['end'])));
             ?>
                 <tr>
                     <td><?= htmlspecialchars($data['surname']) ?></td>
@@ -41,9 +40,9 @@
                         if ($data['payed'] == 0) { ?>
                             <td>Validée</td>
                             <td>
-                                <form action="index.php?action=cancelValidation" method="POST" onsubmit="if(confirm('Veuillez confirmer cette action d\'annulation')){return true;}else{return false;}">
+                                <!-- <form action="index.php?action=cancelValidation" method="POST" onsubmit="if(confirm('Veuillez confirmer cette action d\'annulation')){return true;}else{return false;}">
                                     <button type="submit" class="btn btn-danger btn-sm" name="cancel" value="<?php echo $data['id'] ?>">Annuler</button>
-                                </form>
+                                </form> -->
                             </td>
                         <?php } else if ($data['payed'] == 1) { ?>
                             <td>Validée, Remboursée</td>
