@@ -147,7 +147,7 @@ class GetManager extends Manager
             $price = ($resultat['Km'] * $settings['priceKm']) * 2 + ($settings['priceDay'] * $duree['duree']);
             $price = $price . " €";
         } else {
-            $price = 'Distance non défini';
+            $price = 'Distance non définie';
         }
 
         return $price;

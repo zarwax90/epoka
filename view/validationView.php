@@ -40,9 +40,9 @@
                         if ($data['payed'] == 0) { ?>
                             <td>Validée</td>
                             <td>
-                                <!-- <form action="index.php?action=cancelValidation" method="POST" onsubmit="if(confirm('Veuillez confirmer cette action d\'annulation')){return true;}else{return false;}">
+                                <form action="index.php?action=cancelValidation" method="POST" onsubmit="if(confirm('Veuillez confirmer cette action d\'annulation')){return true;}else{return false;}">
                                     <button type="submit" class="btn btn-danger btn-sm" name="cancel" value="<?php echo $data['id'] ?>">Annuler</button>
-                                </form> -->
+                                </form>
                             </td>
                         <?php } else if ($data['payed'] == 1) { ?>
                             <td>Validée, Remboursée</td>

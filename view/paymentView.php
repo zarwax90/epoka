@@ -33,12 +33,12 @@
                     <td><?= htmlspecialchars($end) ?></td>
                     <td><?= htmlspecialchars($data['city_name'] . " (" . $data['cp'] . ")") ?></td>
                     <td>
-                        <?php if ($price != 'Distance non défini') { ?>
+                        <?php if ($price != 'Distance non définie') { ?>
                             <?= htmlspecialchars($price) ?> <?php } ?>
                     </td>
                     <?php if ($data['validated'] == 0) {
                     } else if ($data['validated'] == 1) {
-                        if ($data['payed'] == 0 and $price != 'Distance non défini') { ?>
+                        if ($data['payed'] == 0 and $price != 'Distance non définie') { ?>
                             <td>En attente</td>
                             <td>
                                 <form action="index.php?action=updatePayment" method="POST">
@@ -49,16 +49,15 @@
                         <?php } else if ($data['payed'] == 1) { ?>
                             <td>Remboursée</td>
                             <td>
-                                <!-- <form action="index.php?action=cancelPayment" method="POST" onsubmit="if(confirm('Veuillez confirmer cette action d\'annulation')){return true;}else{return false;}">
+                                <form action="index.php?action=cancelPayment" method="POST" onsubmit="if(confirm('Veuillez confirmer cette action d\'annulation')){return true;}else{return false;}">
                                     <button type="submit" class="btn btn-danger btn-sm" name="cancel" value="<?php echo $data['id'] ?>">Annuler</button>
-                                </form> -->
+                                </form>
                             </td>
                         <?php } else { ?>
                             <td>
-                                <!-- <?php if ($price == 'Distance non défini') { ?>
+                                <?php if ($price == 'Distance non définie') { ?>
                                     <a href="index.php?action=settings&idUser=<?= htmlspecialchars($data['idUser']) ?>&idVille=<?= htmlspecialchars($data['idVille']) ?>&ville=<?= htmlspecialchars($data['city_name']) ?>"><?= htmlspecialchars($price) ?></a>
-                                <?php } ?> -->
-                                <?= htmlspecialchars($price) ?>
+                                <?php } ?>
                             </td>
                             <td></td>
                     <?php }
